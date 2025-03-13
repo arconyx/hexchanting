@@ -8,8 +8,9 @@
 		"ArcOnyx"
 	],
 	"contact": {
+		"sources": "https://github.com/arconyx/hexchanting"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/hexchanting/icon.png",
 	"environment": "*",
 	"entrypoints": {
