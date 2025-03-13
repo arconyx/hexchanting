@@ -7,7 +7,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.Identifier
 
 
@@ -22,6 +21,6 @@ object HexchantingItems {
 
     val HEX_PICKAXE = register(
         "amethyst_pickaxe",
-        HexMiningToolItem(1f, -2.8f, ToolMaterials.IRON, BlockTags.PICKAXE_MINEABLE, Item.Settings())
+        HexPickaxe(ToolMaterials.IRON, 1, -2.8f, Item.Settings())
     )
 }

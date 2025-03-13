@@ -7,13 +7,9 @@ import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.item.MiningToolItem
-import net.minecraft.item.ToolMaterial
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Hand
@@ -21,15 +17,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
-class HexMiningToolItem(
-    attackDamage: Float,
-    attackSpeed: Float,
-    material: ToolMaterial?,
-    effectiveBlocks: TagKey<Block>?,
-    settings: Settings?
-) : MiningToolItem(
-    attackDamage, attackSpeed, material, effectiveBlocks, settings
-), HexHolderEquipment {
+interface HexMiningTool : HexHolderEquipment {
 
     private fun castPostMine(
         itemStack: ItemStack,
@@ -65,13 +53,13 @@ class HexMiningToolItem(
         }
     }
 
-    override fun postMine(
+    fun safeCastPostMine(
         stack: ItemStack?,
         world: World?,
         state: BlockState?,
         pos: BlockPos?,
         miner: LivingEntity?
-    ): Boolean {
+    ) {
         // I hate Java's nulls
         if (stack != null && world != null && !world.isClient && miner != null && pos != null) {
             val serverWorld = world as? ServerWorld
@@ -80,7 +68,5 @@ class HexMiningToolItem(
                 castPostMine(stack, serverWorld, pos, player)
             }
         }
-
-        return super.postMine(stack, world, state, pos, miner)
     }
 }
