@@ -24,7 +24,7 @@ class PackagedToolCastEnv(caster: ServerPlayerEntity?, castingHand: Hand?) : Pac
         }
         LOGGER.info("Cost after first sweep is {}", costLeft)
         // Then draw from the item
-        if (casterMediaHolder != null) {
+        if (casterMediaHolder != null && costLeft > 0) {
             // The contracts on the AD and on this function are different.
             // ADs return the amount extracted, this wants the amount left
             val extracted = casterMediaHolder.withdrawMedia(costLeft, simulate)
