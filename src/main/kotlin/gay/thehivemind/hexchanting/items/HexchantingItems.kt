@@ -12,8 +12,18 @@ import net.minecraft.util.Identifier
 
 
 object HexchantingItems {
+    private val HEX_PICKAXE = register(
+        "amethyst_pickaxe",
+        HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings())
+    )
+    private val HEX_AXE = register(
+        "amethyst_axe",
+        HexAxe(HexToolMaterials.AMETHYST, 5F, -3f, Item.Settings())
+    )
+
     init {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register({ it -> it.add(HEX_PICKAXE) })
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_PICKAXE) }
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_AXE) }
     }
 
     private fun register(name: String, item: Item): Item {
@@ -23,9 +33,4 @@ object HexchantingItems {
         Registry.register(Registries.ITEM, itemKey, item)
         return item
     }
-
-    val HEX_PICKAXE = register(
-        "amethyst_pickaxe",
-        HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings())
-    )
 }
