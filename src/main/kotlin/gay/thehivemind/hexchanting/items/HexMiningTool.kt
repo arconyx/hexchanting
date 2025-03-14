@@ -1,12 +1,12 @@
 package gay.thehivemind.hexchanting.items
 
 import at.petrak.hexcasting.api.casting.ParticleSpray
-import at.petrak.hexcasting.api.casting.eval.env.PackagedItemCastEnv
 import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
+import gay.thehivemind.hexchanting.casting.PackagedToolCastEnv
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
@@ -25,12 +25,12 @@ interface HexMiningTool : HexHolderEquipment {
         pos: BlockPos,
         player: ServerPlayerEntity
     ) {
-        // TODO: Only extra sublist
+        // TODO: Only extract sublist
         val instructionList = getHex(itemStack, world) ?: return
         // You can't mine with a tool in your offhand so this should be safe
-        val context = PackagedItemCastEnv(player, Hand.MAIN_HAND)
+        val context = PackagedToolCastEnv(player, Hand.MAIN_HAND)
 
-        // TODO: We could pass the block state in here and return a hexal item type iota but I don't want to deal with setting up that dependency right now
+        // TODO: We could pass the block state in here and return a hexal item type or hexical identifier but I don't want to deal with setting up that dependency right now
 
         // Create empty casting image
         var castingImage = CastingImage()

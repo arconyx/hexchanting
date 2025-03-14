@@ -1,45 +1,45 @@
 {
-	"schemaVersion": 1,
-	"id": "hexchanting",
-	"version": "${version}",
-	"name": "Hexchanting",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"ArcOnyx"
-	],
-	"contact": {
-		"sources": "https://github.com/arconyx/hexchanting"
-	},
-	"license": "MIT",
-	"icon": "assets/hexchanting/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			{
-				"value": "gay.thehivemind.hexchanting.Hexchanting",
-				"adapter": "kotlin"
-			}
-		],
-		"client": [
-			{
-				"value": "gay.thehivemind.hexchanting.HexchantingClient",
-				"adapter": "kotlin"
-			}
-		]
-	},
-	"mixins": [
-		"hexchanting.mixins.json",
-		{
-			"config": "hexchanting.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.20.1",
-		"java": ">=17",
-		"fabric-api": "*",
-		"fabric-language-kotlin": "1.13.1+kotlin.2.1.10",
-		"hexcasting": ">=0.11.2-pre-702"
-	}
+  "schemaVersion": 1,
+  "id": "hexchanting",
+  "version": "${version}",
+  "name": "Hexchanting",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "ArcOnyx"
+  ],
+  "contact": {
+    "sources": "https://github.com/arconyx/hexchanting"
+  },
+  "license": "MIT",
+  "icon": "assets/hexchanting/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "value": "gay.thehivemind.hexchanting.Hexchanting",
+        "adapter": "kotlin"
+      }
+    ],
+    "client": [
+      {
+        "value": "gay.thehivemind.hexchanting.HexchantingClient",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "mixins": [
+    "hexchanting.mixins.json",
+    {
+      "config": "hexchanting.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "1.13.1+kotlin.2.1.10",
+    "hexcasting": ">=0.11.2-pre-702"
+  }
 }

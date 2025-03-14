@@ -12,7 +12,6 @@ class HexPickaxe(toolMaterial: ToolMaterial, attackDamage: Int, attackSpeed: Flo
     toolMaterial, attackDamage, attackSpeed,
     settings,
 ), HexMiningTool {
-
     override fun postMine(
         stack: ItemStack?,
         world: World?,
