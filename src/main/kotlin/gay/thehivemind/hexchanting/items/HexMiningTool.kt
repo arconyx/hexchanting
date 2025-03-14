@@ -39,7 +39,7 @@ interface HexMiningTool : HexHolderEquipment {
         val castingStack = castingImage.stack.toMutableList()
         // I think this will convert the list instead of nesting it
         castingStack.add(ListIota(instructionList))
-        castingStack.add(EntityIota(player))
+        castingStack.add(EntityIota(player)) // we don't need this, mind's reflection exists
         castingStack.add(Vec3Iota(pos.toCenterPos()))
         castingImage = castingImage.copy(stack = castingStack.toList())
 
