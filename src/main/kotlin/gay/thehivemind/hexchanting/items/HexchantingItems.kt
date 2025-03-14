@@ -4,7 +4,6 @@ import gay.thehivemind.hexchanting.Hexchanting.MOD_ID
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -27,6 +26,6 @@ object HexchantingItems {
 
     val HEX_PICKAXE = register(
         "amethyst_pickaxe",
-        HexPickaxe(ToolMaterials.IRON, 1, -2.8f, Item.Settings())
+        HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings())
     )
 }

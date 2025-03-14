@@ -16,6 +16,9 @@ import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.sign
 
+// TODO: Repair will likely erase any hexes on them
+// Enchanting might too
+
 // This code is mostly copied from Hex Casting's ItemPackagedHex
 
 // Do these args really need to be nullable?
