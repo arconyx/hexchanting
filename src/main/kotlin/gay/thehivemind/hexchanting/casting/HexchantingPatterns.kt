@@ -10,8 +10,6 @@ import gay.thehivemind.hexchanting.casting.spells.OpImbueEquipment
 import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 
-
-//
 object HexchantingPatterns {
     @JvmStatic
     fun init() {
