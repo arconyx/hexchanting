@@ -19,7 +19,12 @@ class HexPickaxe(toolMaterial: ToolMaterial, attackDamage: Int, attackSpeed: Flo
         pos: BlockPos?,
         miner: LivingEntity?
     ): Boolean {
-        safeCastPostMine(stack, world, state, pos, miner)
+        castPostMine(stack, world, state, pos, miner)
         return super.postMine(stack, world, state, pos, miner)
+    }
+
+    override fun postHit(stack: ItemStack?, target: LivingEntity?, attacker: LivingEntity?): Boolean {
+        castPostHit(stack, target, attacker)
+        return super.postHit(stack, target, attacker)
     }
 }

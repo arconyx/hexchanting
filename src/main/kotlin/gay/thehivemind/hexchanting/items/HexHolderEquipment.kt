@@ -2,6 +2,7 @@ package gay.thehivemind.hexchanting.items
 
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
+import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.item.HexHolderItem
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.pigment.FrozenPigment
@@ -127,5 +128,18 @@ interface HexHolderEquipment : HexHolderItem {
     override fun getPigment(stack: ItemStack?): FrozenPigment? {
         val color = stack?.getCompound(ItemPackagedHex.TAG_PIGMENT) ?: return null
         return FrozenPigment.fromNBT(color)
+    }
+
+
+    companion object {
+        fun extractList(patterns: List<Iota>, index: Int): List<Iota> {
+            if (patterns.all { it is ListIota }) {
+                // this seems ugly
+                return (patterns[index] as ListIota).list.toList()
+            }
+            // if we can't extract a list just return the whole thing
+            // i'm sure this can't go wrong
+            return patterns
+        }
     }
 }
