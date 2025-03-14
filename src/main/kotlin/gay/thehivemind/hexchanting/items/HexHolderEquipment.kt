@@ -72,7 +72,7 @@ interface HexHolderEquipment : HexHolderItem {
         stack.putList(ItemPackagedHex.TAG_PROGRAM, patsTag)
         if (pigment != null) stack.putCompound(ItemPackagedHex.TAG_PIGMENT, pigment.serializeToNBT())
 
-        ItemMediaHolder.withMedia(stack, media, media)
+        ItemMediaHolder.withMedia(stack, 0, 0)
     }
 
     override fun clearHex(stack: ItemStack?) {

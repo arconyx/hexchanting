@@ -1,5 +1,6 @@
 package gay.thehivemind.hexchanting
 
+import gay.thehivemind.hexchanting.casting.HexchantingPatterns
 import gay.thehivemind.hexchanting.items.HexchantingItems
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
@@ -15,5 +16,6 @@ object Hexchanting : ModInitializer {
         logger.info("Hello Fabric world!")
 
         HexchantingItems
+        HexchantingPatterns.init()
     }
 }
