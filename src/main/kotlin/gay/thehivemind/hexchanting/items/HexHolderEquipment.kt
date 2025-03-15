@@ -1,5 +1,8 @@
 package gay.thehivemind.hexchanting.items
 
+import at.petrak.hexcasting.api.casting.ParticleSpray
+import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
+import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.ListIota
@@ -9,10 +12,14 @@ import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.*
 import at.petrak.hexcasting.common.items.magic.ItemMediaHolder
 import at.petrak.hexcasting.common.items.magic.ItemPackagedHex
+import gay.thehivemind.hexchanting.casting.PackagedToolCastEnv
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.util.Hand
+import net.minecraft.util.math.Vec3d
 import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.sign
@@ -130,16 +137,33 @@ interface HexHolderEquipment : HexHolderItem {
         return FrozenPigment.fromNBT(color)
     }
 
+    fun scaffoldCasting(
+        itemStack: ItemStack,
+        world: ServerWorld,
+        player: ServerPlayerEntity,
+        stack: List<Iota>
+    ) {
+        val instructions = getHex(itemStack, world) ?: return
+        // You can't mine or attack with the tool in your offhand so this should be safe
+        val context = PackagedToolCastEnv(player, Hand.MAIN_HAND, itemStack)
 
-    companion object {
-        fun extractList(patterns: List<Iota>, index: Int): List<Iota> {
-            if (patterns.all { it is ListIota }) {
-                // this seems ugly
-                return (patterns[index] as ListIota).list.toList()
-            }
-            // if we can't extract a list just return the whole thing
-            // i'm sure this can't go wrong
-            return patterns
+        // Create empty casting image
+        var castingImage = CastingImage()
+        // prepare stack
+        val castingStack = castingImage.stack.toMutableList()
+        // I think this will convert the list instead of nesting it
+        castingStack.add(ListIota(instructions))
+        // We don't need to add the player to the stack, Mind's Reflection exists
+        castingStack.addAll(stack)
+        castingImage = castingImage.copy(stack = castingStack.toList())
+
+        val vm = CastingVM(castingImage, context)
+        val clientView = vm.queueExecuteAndWrapIotas(instructions, world)
+
+        // We'll probably want to do something more subtle in future but this will work for now
+        if (clientView.resolutionType.success) {
+            ParticleSpray(player.pos, Vec3d(0.0, 1.5, 0.0), 0.4, Math.PI / 3, 30)
+                .sprayParticles(world, context.getPigment())
         }
     }
 }

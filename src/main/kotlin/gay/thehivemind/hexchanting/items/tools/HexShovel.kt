@@ -11,7 +11,7 @@ import net.minecraft.world.World
 class HexShovel(toolMaterial: ToolMaterial, attackDamage: Float, attackSpeed: Float, settings: Settings?) : ShovelItem(
     toolMaterial, attackDamage, attackSpeed,
     settings,
-), HexMiningTool {
+), HexTool {
     override fun postMine(
         stack: ItemStack?,
         world: World?,
@@ -21,10 +21,5 @@ class HexShovel(toolMaterial: ToolMaterial, attackDamage: Float, attackSpeed: Fl
     ): Boolean {
         castPostMine(stack, world, state, pos, miner)
         return super.postMine(stack, world, state, pos, miner)
-    }
-
-    override fun postHit(stack: ItemStack?, target: LivingEntity?, attacker: LivingEntity?): Boolean {
-        castPostHit(stack, target, attacker)
-        return super.postHit(stack, target, attacker)
     }
 }
