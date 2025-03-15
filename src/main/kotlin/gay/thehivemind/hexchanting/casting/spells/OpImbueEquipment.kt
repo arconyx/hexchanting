@@ -30,7 +30,10 @@ class OpImbueEquipment : SpellAction {
             val hexHolder = IXplatAbstractions.INSTANCE.findHexHolder(it)
             it.item is HexHolderEquipment && hexHolder != null
         }
-            ?: throw MishapBadOffhandItem(ItemStack.EMPTY.copy(), Text.of("BAD_ITEM")) // TODO: fix error text
+            ?: throw MishapBadOffhandItem(
+                ItemStack.EMPTY.copy(),
+                Text.of("amethyst equipment")
+            ) // TODO: don't use a raw string
 
         val trueName = MishapOthersName.getTrueNameFromArgs(patterns, env.castingEntity as? ServerPlayerEntity)
         if (trueName != null)
