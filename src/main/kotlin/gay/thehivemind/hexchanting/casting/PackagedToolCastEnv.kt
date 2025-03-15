@@ -3,10 +3,13 @@ package gay.thehivemind.hexchanting.casting
 import at.petrak.hexcasting.api.casting.eval.env.PackagedItemCastEnv
 import at.petrak.hexcasting.xplat.IXplatAbstractions
 import gay.thehivemind.hexchanting.Hexchanting.LOGGER
+import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Hand
 
-class PackagedToolCastEnv(caster: ServerPlayerEntity?, castingHand: Hand?) : PackagedItemCastEnv(caster, castingHand) {
+class PackagedToolCastEnv(caster: ServerPlayerEntity?, castingHand: Hand?, val tool: ItemStack) :
+    PackagedItemCastEnv(caster, castingHand) {
+
     override fun extractMediaEnvironment(cost: Long, simulate: Boolean): Long {
         if (this.caster.isCreative) return 0
 

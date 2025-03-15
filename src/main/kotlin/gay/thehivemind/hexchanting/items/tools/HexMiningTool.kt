@@ -35,7 +35,7 @@ interface HexMiningTool : HexHolderEquipment {
         val instructionList = getHex(itemStack, world) ?: return
         val relevantInstructions = HexHolderEquipment.extractList(instructionList, hook.index)
         // You can't mine or attack with the tool in your offhand so this should be safe
-        val context = PackagedToolCastEnv(player, Hand.MAIN_HAND)
+        val context = PackagedToolCastEnv(player, Hand.MAIN_HAND, itemStack)
 
         // Create empty casting image
         var castingImage = CastingImage()
