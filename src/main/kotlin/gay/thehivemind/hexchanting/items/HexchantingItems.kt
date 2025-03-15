@@ -2,7 +2,9 @@ package gay.thehivemind.hexchanting.items
 
 import gay.thehivemind.hexchanting.Hexchanting.MOD_ID
 import gay.thehivemind.hexchanting.items.tools.HexAxe
+import gay.thehivemind.hexchanting.items.tools.HexHoe
 import gay.thehivemind.hexchanting.items.tools.HexPickaxe
+import gay.thehivemind.hexchanting.items.tools.HexShovel
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
@@ -14,18 +16,28 @@ import net.minecraft.util.Identifier
 
 
 object HexchantingItems {
-    private val HEX_PICKAXE = register(
-        "amethyst_pickaxe",
-        HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings())
-    )
     private val HEX_AXE = register(
         "amethyst_axe",
         HexAxe(HexToolMaterials.AMETHYST, 5F, -3f, Item.Settings())
     )
+    private val HEX_HOE = register(
+        "amethyst_hoe",
+        HexHoe(HexToolMaterials.AMETHYST, -3, 0f, Item.Settings())
+    )
+    private val HEX_PICKAXE = register(
+        "amethyst_pickaxe",
+        HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings())
+    )
+    private val HEX_SHOVEL = register(
+        "amethyst_shovel",
+        HexShovel(HexToolMaterials.AMETHYST, 1.5F, -3f, Item.Settings())
+    )
 
     init {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_PICKAXE) }
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_AXE) }
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_HOE) }
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_PICKAXE) }
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HEX_SHOVEL) }
     }
 
     private fun register(name: String, item: Item): Item {
