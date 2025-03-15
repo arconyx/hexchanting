@@ -1,6 +1,8 @@
 package gay.thehivemind.hexchanting.items
 
 import gay.thehivemind.hexchanting.Hexchanting.MOD_ID
+import gay.thehivemind.hexchanting.items.tools.HexAxe
+import gay.thehivemind.hexchanting.items.tools.HexPickaxe
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups

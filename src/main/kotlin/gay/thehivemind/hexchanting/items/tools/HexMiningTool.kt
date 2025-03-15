@@ -1,4 +1,4 @@
-package gay.thehivemind.hexchanting.items
+package gay.thehivemind.hexchanting.items.tools
 
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
@@ -8,6 +8,7 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
 import gay.thehivemind.hexchanting.casting.PackagedToolCastEnv
+import gay.thehivemind.hexchanting.items.HexHolderEquipment
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
