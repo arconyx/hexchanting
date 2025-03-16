@@ -4,18 +4,10 @@ import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.ListIota
-import at.petrak.hexcasting.api.item.HexHolderItem
 import at.petrak.hexcasting.api.misc.MediaConstants
-import at.petrak.hexcasting.api.pigment.FrozenPigment
-import at.petrak.hexcasting.api.utils.*
-import at.petrak.hexcasting.common.items.magic.ItemMediaHolder
-import at.petrak.hexcasting.common.items.magic.ItemPackagedHex
 import gay.thehivemind.hexchanting.casting.PackagedToolCastEnv
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtElement
-import net.minecraft.nbt.NbtList
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Hand
@@ -42,7 +34,7 @@ If I make the tools use charged amethysts in their construction I don't need to 
 par with diamond. It also fits their unstable nature, consuming themselves for power.
  */
 
-interface HexHolderEquipment : HexHolderItem {
+interface HexHolderEquipment : HexImbuedItem {
     fun getDamageToMediaConversionFactor(): Long {
         return MediaConstants.DUST_UNIT / 10
     }
@@ -91,50 +83,6 @@ interface HexHolderEquipment : HexHolderItem {
 
     override fun canDrawMediaFromInventory(stack: ItemStack?): Boolean {
         return true
-    }
-
-    override fun hasHex(stack: ItemStack?): Boolean {
-        return stack?.hasList(ItemPackagedHex.TAG_PROGRAM, NbtElement.COMPOUND_TYPE) ?: false
-    }
-
-    // May well need to modify this to handle our nested list of patterns
-    override fun getHex(stack: ItemStack?, level: ServerWorld?): MutableList<Iota>? {
-        val patsTag = stack?.getList(ItemPackagedHex.TAG_PROGRAM, NbtElement.COMPOUND_TYPE.toInt()) ?: return null
-
-        val out = ArrayList<Iota>()
-        for (patTag in patsTag) {
-            val tag = patTag.asCompound
-            out.add(IotaType.deserialize(tag, level))
-        }
-        return out
-    }
-
-    override fun writeHex(stack: ItemStack?, program: MutableList<Iota>?, pigment: FrozenPigment?, media: Long) {
-        if (stack == null || program == null) {
-            return
-        }
-
-        val patsTag = NbtList()
-        for (pat in program) {
-            patsTag.add(IotaType.serialize(pat))
-        }
-
-        stack.putList(ItemPackagedHex.TAG_PROGRAM, patsTag)
-        if (pigment != null) stack.putCompound(ItemPackagedHex.TAG_PIGMENT, pigment.serializeToNBT())
-
-        ItemMediaHolder.withMedia(stack, 0, 0)
-    }
-
-    override fun clearHex(stack: ItemStack?) {
-        stack?.remove(ItemPackagedHex.TAG_PROGRAM)
-        stack?.remove(ItemPackagedHex.TAG_PIGMENT)
-        stack?.remove(ItemMediaHolder.TAG_MEDIA)
-        stack?.remove(ItemMediaHolder.TAG_MAX_MEDIA)
-    }
-
-    override fun getPigment(stack: ItemStack?): FrozenPigment? {
-        val color = stack?.getCompound(ItemPackagedHex.TAG_PIGMENT) ?: return null
-        return FrozenPigment.fromNBT(color)
     }
 
     fun scaffoldCasting(

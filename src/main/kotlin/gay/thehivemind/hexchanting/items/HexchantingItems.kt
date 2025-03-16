@@ -14,6 +14,8 @@ import net.minecraft.util.Identifier
 
 
 object HexchantingItems {
+    val HEX_ARROW = registerWithGroup("amethyst_arrow", HexArrowItem(Item.Settings()), ItemGroups.COMBAT)
+
     init {
         registerWithGroup(
             "amethyst_axe", HexAxe(HexToolMaterials.AMETHYST, 5F, -3f, Item.Settings()), ItemGroups.TOOLS
@@ -42,8 +44,9 @@ object HexchantingItems {
         return item
     }
 
-    private fun registerWithGroup(name: String, item: Item, group: RegistryKey<ItemGroup>) {
-        val tool = register(name, item)
-        ItemGroupEvents.modifyEntriesEvent(group).register { it.add { tool } }
+    private fun registerWithGroup(name: String, item: Item, group: RegistryKey<ItemGroup>): Item {
+        val ri = register(name, item)
+        ItemGroupEvents.modifyEntriesEvent(group).register { it.add { ri } }
+        return item
     }
 }

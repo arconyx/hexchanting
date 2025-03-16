@@ -10,7 +10,7 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapBadOffhandItem
 import at.petrak.hexcasting.api.casting.mishaps.MishapOthersName
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.xplat.IXplatAbstractions
-import gay.thehivemind.hexchanting.items.HexHolderEquipment
+import gay.thehivemind.hexchanting.items.HexImbuedItem
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
@@ -28,7 +28,7 @@ class OpImbueEquipment : SpellAction {
 
         val (handStack) = env.getHeldItemToOperateOn {
             val hexHolder = IXplatAbstractions.INSTANCE.findHexHolder(it)
-            it.item is HexHolderEquipment && hexHolder != null
+            it.item is HexImbuedItem && hexHolder != null
         }
             ?: throw MishapBadOffhandItem(
                 ItemStack.EMPTY.copy(),
