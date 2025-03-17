@@ -3,6 +3,7 @@ package gay.thehivemind.hexchanting.items
 import gay.thehivemind.hexchanting.Hexchanting.MOD_ID
 import gay.thehivemind.hexchanting.items.armour.AmethystArmourMaterial
 import gay.thehivemind.hexchanting.items.armour.HexArmorItem
+import gay.thehivemind.hexchanting.items.armour.HexShield
 import gay.thehivemind.hexchanting.items.tools.*
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.ArmorItem
@@ -34,9 +35,7 @@ object HexchantingItems {
         )
 
         registerWithGroup(
-            "amethyst_sword",
-            HexSword(HexToolMaterials.AMETHYST, 3, -2.4F, Item.Settings()),
-            ItemGroups.COMBAT
+            "amethyst_sword", HexSword(HexToolMaterials.AMETHYST, 3, -2.4F, Item.Settings()), ItemGroups.COMBAT
         )
 
         registerWithGroup(
@@ -58,6 +57,10 @@ object HexchantingItems {
             "amethyst_boots",
             HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.BOOTS, Item.Settings()),
             ItemGroups.COMBAT
+        )
+
+        registerWithGroup(
+            "amethyst_shield", HexShield(Item.Settings()), ItemGroups.COMBAT
         )
     }
 
