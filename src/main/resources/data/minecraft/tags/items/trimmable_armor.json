@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "hexchanting:amethyst_helmet",
+    "hexchanting:amethyst_chestplate",
+    "hexchanting:amethyst_leggings",
+    "hexchanting:amethyst_boots"
+  ]
+}

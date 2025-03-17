@@ -39,6 +39,9 @@ replay_*.log
 *.hprof
 *.jfr
 
+# kotlin
+.kotlin/
+
 # misc dev env
 .direnv/
 .envrc
