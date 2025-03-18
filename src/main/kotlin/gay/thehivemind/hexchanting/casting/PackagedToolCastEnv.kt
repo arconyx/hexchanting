@@ -13,11 +13,9 @@ class PackagedToolCastEnv(caster: ServerPlayerEntity?, castingHand: Hand?, val t
     override fun extractMediaEnvironment(cost: Long, simulate: Boolean): Long {
         if (this.caster.isCreative) return 0
 
-        val casterStack = caster.getStackInHand(this.castingHand)
-        val casterHexHolder = IXplatAbstractions.INSTANCE.findHexHolder(casterStack) ?: return cost
+        val casterHexHolder = IXplatAbstractions.INSTANCE.findHexHolder(tool) ?: return cost
         val canCastFromInv = casterHexHolder.canDrawMediaFromInventory()
-
-        val casterMediaHolder = IXplatAbstractions.INSTANCE.findMediaHolder(casterStack)
+        val casterMediaHolder = IXplatAbstractions.INSTANCE.findMediaHolder(tool)
 
         var costLeft = cost
         LOGGER.info("Base cost is {}", costLeft)
