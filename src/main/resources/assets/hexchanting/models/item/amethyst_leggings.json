@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/diamond_leggings"
+    "layer0": "hexchanting:item/amethyst_leggings"
   }
 }
