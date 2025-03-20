@@ -14,4 +14,8 @@ class HexSword(toolMaterial: ToolMaterial?, attackDamage: Int, attackSpeed: Floa
         castPostHit(stack, target, attacker)
         return super.postHit(stack, target, attacker)
     }
+
+    override fun canRepair(stack: ItemStack?, ingredient: ItemStack?): Boolean {
+        return false
+    }
 }

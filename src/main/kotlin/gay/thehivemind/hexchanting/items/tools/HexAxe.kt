@@ -23,4 +23,8 @@ class HexAxe(material: ToolMaterial?, attackDamage: Float, attackSpeed: Float, s
         castPostMine(stack, world, state, pos, miner)
         return super.postMine(stack, world, state, pos, miner)
     }
+
+    override fun canRepair(stack: ItemStack?, ingredient: ItemStack?): Boolean {
+        return false
+    }
 }
