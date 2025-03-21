@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "item": "hexcasting:charged_amethyst"
+    }
+  },
+  "pattern": [
+    "X X",
+    "X X"
+  ],
+  "result": {
+    "item": "hexchanting:amethyst_boots"
+  },
+  "show_notification": true
+}

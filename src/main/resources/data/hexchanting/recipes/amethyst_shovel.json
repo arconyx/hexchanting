@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "hexcasting:charged_amethyst"
+    }
+  },
+  "pattern": [
+    "X",
+    "#",
+    "#"
+  ],
+  "result": {
+    "item": "hexchanting:amethyst_shovel"
+  },
+  "show_notification": true
+}

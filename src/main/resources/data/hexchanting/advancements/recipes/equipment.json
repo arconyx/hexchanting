@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hexchanting:charged_amethyst"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hexchanting:amethyst_helmet",
+      "hexchanting:amethyst_chestplate",
+      "hexchanting:amethyst_leggings",
+      "hexchanting:amethyst_boots",
+      "hexchanting:amethyst_axe",
+      "hexchanting:amethyst_hoe",
+      "hexchanting:amethyst_pickaxe",
+      "hexchanting:amethyst_shovel",
+      "hexchanting:amethyst_arrow"
+    ]
+  },
+  "sends_telemetry_event": false
+}
