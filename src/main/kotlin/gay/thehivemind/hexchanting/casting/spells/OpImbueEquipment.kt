@@ -18,7 +18,7 @@ import net.minecraft.text.Text
 // TODO: How to handle in circles
 class OpImbueEquipment : SpellAction {
     override val argc = 1
-    private val mediaCost = 10 * MediaConstants.CRYSTAL_UNIT
+    private val mediaCost = 15 * MediaConstants.CRYSTAL_UNIT
 
     override fun execute(
         args: List<Iota>,
