@@ -12,10 +12,11 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [ jdk21 libglvnd ];
-          shellHook = ''
-              export LD_LIBRARY_PATH="''${LD_LIBRARY_PATH}''${LD_LIBRARY_PATH:+:}${pkgs.libglvnd}/lib"
-            '';
+          nativeBuildInputs = with pkgs; [ stdenv.cc.cc.lib jdk21 libglvnd xorg.libX11 python312 nodejs_18 ];
+	   LD_LIBRARY_PATH = ''${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.libglvnd}/lib:${pkgs.xorg.libX11}/lib'';
+          # shellHook = ''
+          #     export LD_LIBRARY_PATH="''${LD_LIBRARY_PATH}''${LD_LIBRARY_PATH:+:}${pkgs.libglvnd}/lib"
+          #   '';
         };
       }
     );
