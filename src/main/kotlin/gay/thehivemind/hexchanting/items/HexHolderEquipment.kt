@@ -4,7 +4,6 @@ import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.misc.MediaConstants
 import gay.thehivemind.hexchanting.casting.PackagedToolCastEnv
 import net.minecraft.item.ItemStack
@@ -100,7 +99,7 @@ interface HexHolderEquipment : HexImbuedItem {
         // prepare stack
         val castingStack = castingImage.stack.toMutableList()
         // I think this will convert the list instead of nesting it
-        castingStack.add(ListIota(instructions))
+//        castingStack.add(ListIota(instructions))
         // We don't need to add the player to the stack, Mind's Reflection exists
         castingStack.addAll(stack)
         castingImage = castingImage.copy(stack = castingStack.toList())

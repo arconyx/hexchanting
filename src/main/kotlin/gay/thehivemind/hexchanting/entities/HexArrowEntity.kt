@@ -6,7 +6,6 @@ import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
-import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.*
 import gay.thehivemind.hexchanting.casting.ArrowCastEnv
@@ -76,7 +75,7 @@ class HexArrowEntity(
         var castingImage = CastingImage()
         // prepare stack
         val castingStack = castingImage.stack.toMutableList()
-        castingStack.add(ListIota(patterns))
+//        castingStack.add(ListIota(patterns))
         castingStack.add(EntityIota(this))
         castingStack.add(EntityIota(target))
         castingImage = castingImage.copy(stack = castingStack.toList())
