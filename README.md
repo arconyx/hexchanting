@@ -22,6 +22,7 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 
 ## Notes
 
+- Cast on mine doesn't work in creative because it bypasses the tool entirely.
 - This is mostly made for personal use. Updates will be sporadic.
 - If you want to know what you can do with this, go read the license. I encourage you to tweak it, port it, borrow parts
   or whatever else you want to do and share the results with the world.
