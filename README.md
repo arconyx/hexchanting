@@ -17,7 +17,15 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 
 - Shields, if I can be bothered dealing with the all the hardcoded logic involved in the vanilla shield implementation.
 - No Forge port, unless I start playing on Forge.
-- Return identifiers when breaking blocks
+- Return identifiers when breaking blocks (wait on scrying being broken out of hexical)
+- Armour tinting
+- Specialised armour triggers (helmet: aggro, boots: falling, leggings: death)
+- Arrows cast on hit block
+- Apply arrow mishaps to the target? Maybe.
+- Icon
+- Prohibit mending?
+- Cast on mine for jeweller's hammer?
+- Disable or reduce particles
 - ???
 
 ## Notes
@@ -31,3 +39,4 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
   were valuable reference points when I was getting started.
 - Also to everyone involved in making [HexDoc](https://github.com/hexdoc-dev/hexdoc) because they made documentation
   easy.
+- And to everyone who has offered feedback in the Hex Casting Discord.

@@ -10,6 +10,7 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapBadOffhandItem
 import at.petrak.hexcasting.api.casting.mishaps.MishapOthersName
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.xplat.IXplatAbstractions
+import gay.thehivemind.hexchanting.items.HexArrowItem
 import gay.thehivemind.hexchanting.items.HexImbuedItem
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
@@ -18,7 +19,6 @@ import net.minecraft.text.Text
 // TODO: How to handle in circles
 class OpImbueEquipment : SpellAction {
     override val argc = 1
-    private val mediaCost = 15 * MediaConstants.CRYSTAL_UNIT
 
     override fun execute(
         args: List<Iota>,
@@ -38,6 +38,16 @@ class OpImbueEquipment : SpellAction {
         val trueName = MishapOthersName.getTrueNameFromArgs(patterns, env.castingEntity as? ServerPlayerEntity)
         if (trueName != null)
             throw MishapOthersName(trueName)
+
+        val mediaCost = if (handStack.item is HexArrowItem) {
+            // Arbitrary
+            5 * MediaConstants.SHARD_UNIT
+        } else {
+            // A tool has 1200 durability == 120 dust == 12 charged
+            // It costs 3 charged amethyst to craft
+            // A cost of 9 thus makes it media neutral.
+            9 * MediaConstants.CRYSTAL_UNIT
+        }
 
 
         return SpellAction.Result(
