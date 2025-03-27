@@ -10,8 +10,9 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - Wield an amethyst sword that casts on hit, pushing the targeted entity to the stack.
 - Wear amethyst armour that casts when you take damage. Pushes the damage source to the stack, decomposed into attacking
   entity, source entity, position and amount.
-- Fire amethyst arrows, with an embedded hex and a small media supply. Casts on hitting an entity, pushing itself and
-  the unfortunate target to the stack. ~~Are these discount projectile wisps? Yes.~~
+- Fire amethyst arrows, with an embedded hex and a small media supply. Casts on hitting an entity or a block, pushing
+  itself and
+  the unfortunate target (or null) to the stack. ~~Are these discount projectile wisps? Yes.~~
 
 ## Futures
 
@@ -20,7 +21,6 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - Return identifiers when breaking blocks (wait on scrying being broken out of hexical)
 - Armour tinting
 - Specialised armour triggers (helmet: aggro, boots: falling, leggings: death)
-- Arrows cast on hit block
 - Apply arrow mishaps to the target? Maybe.
 - Icon
 - Prohibit mending?
