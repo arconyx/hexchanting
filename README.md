@@ -26,6 +26,8 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - Prohibit mending?
 - Cast on mine for jeweller's hammer?
 - Disable or reduce particles
+- Add recipes to book
+- Rewrite book with more sections to accommodate expanding options.
 - ???
 
 ## Notes

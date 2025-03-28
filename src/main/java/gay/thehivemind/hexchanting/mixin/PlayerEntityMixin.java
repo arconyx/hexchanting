@@ -1,10 +1,12 @@
 package gay.thehivemind.hexchanting.mixin;
 
-import gay.thehivemind.hexchanting.items.armour.HexArmour;
+import gay.thehivemind.hexchanting.HexchantingTags;
+import gay.thehivemind.hexchanting.items.armour.HexArmorItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,11 +26,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "applyDamage", at = @At(value = "TAIL"))
     public void triggerArmor(DamageSource source, float amount, CallbackInfo ci) {
-        // TODO: Don't trigger on /kill by validating damage source
-        if (this.isInvulnerableTo(source) || this.getWorld().isClient()) return;
+        if (this.getWorld().isClient() || this.isInvulnerableTo(source) || source.isIn(HexchantingTags.INSTANCE.getBYPASS_ARMOUR()))
+            return;
         this.getArmorItems().forEach((ItemStack stack) -> {
-            if (stack.getItem() instanceof HexArmour armour) {
-                armour.cast(stack, source, amount, this);
+            if (stack.getItem() instanceof HexArmorItem armour && armour.getType() == ArmorItem.Type.CHESTPLATE) {
+                armour.castOnHit(stack, source, amount, this);
             }
         });
     }

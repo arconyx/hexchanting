@@ -92,14 +92,13 @@ interface HexHolderEquipment : HexImbuedItem {
     ) {
         val instructions = getHex(itemStack, world) ?: return
         // You can't mine or attack with the tool in your offhand so this should be safe
+        // TODO: but not for armour. investigate
         val context = PackagedToolCastEnv(player, Hand.MAIN_HAND, itemStack)
 
         // Create empty casting image
         var castingImage = CastingImage()
         // prepare stack
         val castingStack = castingImage.stack.toMutableList()
-        // I think this will convert the list instead of nesting it
-//        castingStack.add(ListIota(instructions))
         // We don't need to add the player to the stack, Mind's Reflection exists
         castingStack.addAll(stack)
         castingImage = castingImage.copy(stack = castingStack.toList())
