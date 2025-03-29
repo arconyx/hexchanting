@@ -8,11 +8,10 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - Craft amethyst axes, hoes, pickaxes and shovels that cast after breaking a block, pushing the location of the block to
   the stack. Enchantments propagate when the Break Block spell is cast using this tool.
 - Wield an amethyst sword that casts on hit, pushing the targeted entity to the stack.
-- Wear amethyst armour that casts when you take damage. Pushes the damage source to the stack, decomposed into attacking
-  entity, source entity, position and amount.
+- Wear amethyst armour that casts on various triggers. Helmets cast on aggro, chestplate when damaged, leggings on death
+  and boots when falling. The stack is initialised with relevant iotas.
 - Fire amethyst arrows, with an embedded hex and a small media supply. Casts on hitting an entity or a block, pushing
-  itself and
-  the unfortunate target (or null) to the stack. ~~Are these discount projectile wisps? Yes.~~
+  itself and the unfortunate target (or null) to the stack. ~~Are these discount projectile wisps? Yes.~~
 
 ## Futures
 
@@ -20,9 +19,7 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - No Forge port, unless I start playing on Forge.
 - Return identifiers when breaking blocks (wait on scrying being broken out of hexical)
 - Armour tinting
-- Specialised armour triggers (helmet: aggro, boots: falling, leggings: death)
 - Apply arrow mishaps to the target? Maybe.
-- Icon
 - Prohibit mending?
 - Cast on mine for jeweller's hammer?
 - Disable or reduce particles
