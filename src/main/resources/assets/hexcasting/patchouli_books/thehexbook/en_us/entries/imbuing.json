@@ -22,8 +22,52 @@
       "text": "hexchanting.page.imbuing.3"
     },
     {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_axe",
+      "recipe2": "hexchanting:amethyst_hoe"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_pickaxe",
+      "recipe2": "hexchanting:amethyst_shovel"
+    },
+    {
       "type": "patchouli:text",
-      "text": "hexchanting.page.imbuing.4"
+      "text": "hexchanting.page.imbuing.tools.0"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_sword",
+      "text": "hexchanting.page.imbuing.weapons.sword"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "hexchanting.page.imbuing.weapons.arrow.1"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_arrow",
+      "text": "hexchanting.page.imbuing.weapons.arrow"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_helmet",
+      "text": "hexchanting.page.imbuing.armour.helmet"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_chestplate",
+      "text": "hexchanting.page.imbuing.armour.chestplate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_leggings",
+      "text": "hexchanting.page.imbuing.armour.leggings"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "hexchanting:amethyst_boots",
+      "text": "hexchanting.page.imbuing.armour.boots"
     },
     {
       "type": "hexcasting:pattern",
@@ -32,14 +76,6 @@
       "input": "[pattern]",
       "output": "",
       "text": "hexchanting.page.imbue_equipment.summary.0"
-    },
-    {
-      "type": "patchouli:text",
-      "text": "hexchanting.page.imbue_equipment.summary.1"
-    },
-    {
-      "type": "patchouli:text",
-      "text": "hexchanting.page.imbue_equipment.summary.2"
     }
   ]
 }
