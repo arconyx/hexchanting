@@ -3,7 +3,6 @@ package gay.thehivemind.hexchanting.items.armour
 import at.petrak.hexcasting.api.casting.iota.DoubleIota
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
-import at.petrak.hexcasting.api.casting.iota.Vec3Iota
 import gay.thehivemind.hexchanting.items.HexHolderEquipment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -20,7 +19,6 @@ interface HexArmour : HexHolderEquipment {
             itemStack, player.serverWorld, player, listOf(
             damageSource.attacker?.let { EntityIota(it) } ?: NullIota(),
             damageSource.source?.let { EntityIota(it) } ?: NullIota(),
-            damageSource.position?.let { Vec3Iota(it) } ?: NullIota(),
             DoubleIota(amount.toDouble())
         ))
     }
@@ -40,7 +38,6 @@ interface HexArmour : HexHolderEquipment {
             itemStack, player.serverWorld, player, listOf(
                 damageSource.attacker?.let { EntityIota(it) } ?: NullIota(),
                 damageSource.source?.let { EntityIota(it) } ?: NullIota(),
-                damageSource.position?.let { Vec3Iota(it) } ?: NullIota(),
             )
         )
     }
