@@ -2,14 +2,20 @@ package gay.thehivemind.hexchanting.items
 
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
+import at.petrak.hexcasting.api.casting.iota.PatternIota
 import at.petrak.hexcasting.api.item.HexHolderItem
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.*
 import at.petrak.hexcasting.common.items.magic.ItemPackagedHex
+import at.petrak.hexcasting.common.lib.hex.HexActions
+import net.minecraft.client.item.TooltipContext
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.text.Text
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.World
 
 interface HexImbuedItem : HexHolderItem {
     companion object {
@@ -54,5 +60,25 @@ interface HexImbuedItem : HexHolderItem {
     override fun getPigment(stack: ItemStack?): FrozenPigment? {
         val color = stack?.getCompound(TAG_PIGMENT) ?: return null
         return FrozenPigment.fromNBT(color)
+    }
+
+    fun appendHexFlagToTooltip(
+        stack: ItemStack?,
+        world: World?,
+        tooltip: MutableList<Text>?,
+        context: TooltipContext?
+    ) {
+        val patterns = stack?.getList(TAG_PROGRAM, NbtElement.COMPOUND_TYPE.toInt())
+        if (patterns != null && patterns.size > 0) {
+            // Self-indulgent variable colouring
+            val time = world?.time?.div(5)?.rem(814621)?.toFloat() ?: 10F // magic number
+            val pigment = getPigment(stack)?.colorProvider?.getColor(time, stack.holder?.pos ?: Vec3d(0.3, 0.4, 0.5))
+            // PatternIota.display adds styling we're then going to overwrite
+            // since I can't be bothered adding inline as a dependency to do it properly
+            val hexxy = PatternIota.display(HexActions.EVAL.prototype)
+            val proudHexxy =
+                hexxy.copy().fillStyle(hexxy.style.withColor(pigment ?: 16777215)) // == Formatting.White.colorValue
+            tooltip?.add(proudHexxy)
+        }
     }
 }

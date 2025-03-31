@@ -16,7 +16,7 @@ import kotlin.math.max
 import kotlin.math.sign
 
 // TODO: Repair will likely erase any hexes on them
-// Enchanting might too
+// Enchanting works fine in testing.
 
 // This code is mostly copied from Hex Casting's ItemPackagedHex
 

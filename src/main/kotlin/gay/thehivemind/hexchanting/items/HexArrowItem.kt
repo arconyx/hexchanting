@@ -1,10 +1,12 @@
 package gay.thehivemind.hexchanting.items
 
 import gay.thehivemind.hexchanting.entities.HexArrowEntity
+import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.ArrowItem
 import net.minecraft.item.ItemStack
+import net.minecraft.text.Text
 import net.minecraft.world.World
 
 // Most of this code is actually useless, because every happens on the entity
@@ -35,5 +37,15 @@ class HexArrowItem(settings: Settings?) : ArrowItem(settings), HexImbuedItem {
 
     override fun canDrawMediaFromInventory(stack: ItemStack?): Boolean {
         return false
+    }
+
+    override fun appendTooltip(
+        stack: ItemStack?,
+        world: World?,
+        tooltip: MutableList<Text>?,
+        context: TooltipContext?
+    ) {
+        super.appendTooltip(stack, world, tooltip, context)
+        appendHexFlagToTooltip(stack, world, tooltip, context)
     }
 }
