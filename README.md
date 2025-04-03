@@ -1,7 +1,7 @@
 # Hexchanting
 
 Imbue your equipment with the power of Hex
-Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/en_us/).
+Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/en_us/). For Fabric on Minecraft 1.20.1.
 
 ## Features
 
