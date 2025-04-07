@@ -97,10 +97,7 @@ class HexArrowEntity(
     }
 
     override fun asItemStack(): ItemStack {
-        val stack = ItemStack(HEX_ARROW)
-        val hexHolder = stack.item as HexArrowItem
-        hexHolder.writeHex(stack, patterns.toMutableList(), pigment, 0)
-        return stack
+        return ItemStack.EMPTY
     }
 
     // TODO: Is this working?
