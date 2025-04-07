@@ -1,0 +1,37 @@
+name: Publish release
+
+on:
+  push:
+    branches: main
+    tags: "v*"
+  workflow_dispatch:
+    inputs:
+      release:
+        description: Release this version
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+      - name: setup jdk
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: build
+        run: ./gradlew modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+      - name: capture build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReleaseArtifacts
+          path: build/libs/
