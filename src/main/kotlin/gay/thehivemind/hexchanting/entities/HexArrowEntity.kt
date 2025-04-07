@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.NullIota
+import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.*
 import gay.thehivemind.hexchanting.casting.ArrowCastEnv
@@ -28,6 +29,15 @@ class HexArrowEntity(
 ) : ArrowEntity(world, owner) {
     private var patterns: List<Iota> = listOf()
     var pigment: FrozenPigment? = FrozenPigment.DEFAULT.get()
+    private var media: Long = MAX_MEDIA
+
+    fun getMedia(): Long {
+        return media
+    }
+
+    fun setMedia(value: Long) {
+        media = value.coerceAtLeast(0).coerceAtMost(MAX_MEDIA)
+    }
 
     override fun initFromStack(stack: ItemStack) {
         super.initFromStack(stack)
@@ -56,6 +66,7 @@ class HexArrowEntity(
             nbt.putList(PROGRAM_TAG, nbtList)
         }
         pigment?.let { nbt.putCompound(PIGMENT_TAG, it.serializeToNBT()) }
+        nbt.putLong(MEDIA_TAG, media)
     }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound?) {
@@ -68,6 +79,9 @@ class HexArrowEntity(
         }
         if (nbt?.hasCompound(PIGMENT_TAG) == true) {
             pigment = FrozenPigment.fromNBT(nbt.getCompound(PIGMENT_TAG))
+        }
+        if (nbt?.hasLong(MEDIA_TAG) == true) {
+            media = nbt.getLong(MEDIA_TAG)
         }
     }
 
@@ -108,5 +122,7 @@ class HexArrowEntity(
     companion object {
         private const val PROGRAM_TAG = "hexchanting:program"
         private const val PIGMENT_TAG = "hexchanting:pigment"
+        private const val MEDIA_TAG = "hexchanting:media"
+        private const val MAX_MEDIA = MediaConstants.SHARD_UNIT
     }
 }

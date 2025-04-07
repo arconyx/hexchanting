@@ -4,7 +4,6 @@ import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.MishapEnvironment
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedMishapEnv
-import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.xplat.IXplatAbstractions
 import gay.thehivemind.hexchanting.entities.HexArrowEntity
@@ -24,7 +23,6 @@ class ArrowCastEnv(world: ServerWorld?, private val arrow: HexArrowEntity) : Cas
     private val AMBIT_RADIUS = 4.0
     private val shooter = arrow.owner
     private val pigment = arrow.pigment
-    private var media = MediaConstants.SHARD_UNIT
 
     /**
      * Gets the caster. Can be null if [.getCaster] is also null
@@ -62,9 +60,9 @@ class ArrowCastEnv(world: ServerWorld?, private val arrow: HexArrowEntity) : Cas
      * positive.
      */
     override fun extractMediaEnvironment(cost: Long, simulate: Boolean): Long {
-        val remainingCost = cost - media
+        val remainingCost = cost - arrow.getMedia()
         if (!simulate) {
-            media = max(media - cost, 0)
+            arrow.setMedia(max(arrow.getMedia() - cost, 0))
         }
         return remainingCost
     }
