@@ -6,7 +6,7 @@ import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
-import at.petrak.hexcasting.api.casting.iota.NullIota
+import at.petrak.hexcasting.api.casting.iota.Vec3Iota
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.*
@@ -21,6 +21,7 @@ import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
@@ -50,12 +51,12 @@ class HexArrowEntity(
 
     override fun onHit(target: LivingEntity) {
         super.onHit(target)
-        cast(target)
+        cast(target, null)
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult?) {
         super.onBlockHit(blockHitResult)
-        cast(target = null)
+        cast(null, blockHitResult?.blockPos)
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound?) {
@@ -85,7 +86,7 @@ class HexArrowEntity(
         }
     }
 
-    private fun cast(target: LivingEntity?) {
+    private fun cast(target: LivingEntity?, position: BlockPos?) {
         if (world.isClient) {
             return
         }
@@ -98,7 +99,12 @@ class HexArrowEntity(
         val castingStack = castingImage.stack.toMutableList()
 //        castingStack.add(ListIota(patterns))
         castingStack.add(EntityIota(this))
-        castingStack.add(target?.let { EntityIota(it) } ?: NullIota())
+        if (target != null) {
+            castingStack.add(EntityIota(target))
+        }
+        if (position != null) {
+            castingStack.add(Vec3Iota(position.toCenterPos()))
+        }
         castingImage = castingImage.copy(stack = castingStack.toList())
 
         val vm = CastingVM(castingImage, env)
