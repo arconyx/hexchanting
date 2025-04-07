@@ -3,7 +3,7 @@
   "icon": "hexchanting:amethyst_pickaxe",
   "category": "hexcasting:items",
   "sortnum": 12,
-  "advancement": "hexchanting:recipes/equipment",
+  "advancement": "hexcasting:root",
   "pages": [
     {
       "type": "patchouli:text",
