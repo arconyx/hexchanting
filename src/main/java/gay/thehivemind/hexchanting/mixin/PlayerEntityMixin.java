@@ -24,7 +24,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Shadow
     public abstract Iterable<ItemStack> getArmorItems();
 
-    @Inject(method = "applyDamage", at = @At(value = "TAIL"))
+    @Inject(method = "applyDamage", at = @At(value = "HEAD"))
     public void triggerArmor(DamageSource source, float amount, CallbackInfo ci) {
         if (this.getWorld().isClient() || this.isInvulnerableTo(source) || source.isIn(HexchantingTags.INSTANCE.getBYPASS_ARMOUR()))
             return;
