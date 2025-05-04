@@ -8,7 +8,6 @@ plugins {
     id("com.modrinth.minotaur") version "2.+"
 }
 
-// Declare properties from gradle.properties using the 'by project' delegate
 val mod_version: String by project
 val maven_group: String by project
 val archives_base_name: String by project
@@ -32,13 +31,7 @@ base {
 }
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-
-    // hexcasting
+   // hexcasting
     maven { url = uri("https://maven.blamejared.com/") }
     // mod menu
     maven { url = uri("https://maven.terraformersmc.com/releases") }
@@ -50,10 +43,8 @@ repositories {
 
 loom {
     splitEnvironmentSourceSets()
-
     mods {
         create("hexchanting") {
-            // Access source sets by name
             sourceSet(sourceSets.getByName("main"))
             sourceSet(sourceSets.getByName("client"))
         }
@@ -66,7 +57,6 @@ dependencies {
     mappings("net.fabricmc:yarn:$yarn_mappings:v2")
     modImplementation("net.fabricmc:fabric-loader:$loader_version")
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_version")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabric_kotlin_version")
 
@@ -78,7 +68,6 @@ dependencies {
         exclude(module = "emi")
     }
 
-    // Use the properties declared via 'by project'
     modLocalRuntime("dev.onyxstudios.cardinal-components-api:cardinal-components-api:$cardinal_components_version")
     modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version")
     modLocalRuntime("com.samsthenerd.inline:inline-fabric:$minecraft_version-$inline_version")
@@ -88,7 +77,6 @@ dependencies {
 
 tasks.processResources {
     inputs.property("version", project.version)
-
     filesMatching("fabric.mod.json") {
         expand("version" to inputs.properties["version"])
     }
@@ -99,7 +87,6 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 tasks.withType<KotlinCompile>().all {
-    // Use compilerOptions instead of kotlinOptions for jvmTarget
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
@@ -110,7 +97,6 @@ java {
     // if it is present.
     // If you remove this line, sources will not be generated.
     withSourcesJar()
-
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
@@ -132,7 +118,6 @@ publishing {
         }
     }
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
         // Add repositories to publish to here.
         // Notice: This block does NOT have the same function as the block in the top level.
@@ -141,7 +126,6 @@ publishing {
     }
 }
 
-// build.gradle.kts
 modrinth {
     // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail
     // Just make sure it stays private!
