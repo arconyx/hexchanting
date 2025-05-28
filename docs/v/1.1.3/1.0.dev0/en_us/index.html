@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Hexchanting Book</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="description" content="The Hexchanting Book, all in one place." />
+      <meta name="author" content="ArcOnyx" />
+        <link rel="None" type="image/ico" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="favicon-16x16.png" />
+        <link rel="icon" type="image/png" href="favicon-32x32.png" />
+        <link rel="icon" type="image/png" href="favicon-64x64.png" />
+        <link rel="icon" type="image/png" href="favicon-96x96.png" />
+        <link rel="icon" type="image/png" href="favicon-180x180.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-152x152.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-167x167.png" />
+        <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon-180x180.png" />
+        <link rel="None" type="image/png" href="mstile-70x70.png" />
+        <link rel="None" type="image/png" href="mstile-270x270.png" />
+        <link rel="None" type="image/png" href="mstile-310x310.png" />
+        <link rel="None" type="image/png" href="mstile-310x150.png" />
+        <link rel="shortcut icon" type="image/png" href="favicon-196x196.png" />
+      <link rel="mask-icon" href="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/main/media/safari-pinned-tab.svg" color="#332233">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Hexchanting Book" />
+<meta property="og:image" content="https://arconyx.github.io/hexchanting/v/1.1.3/1.0.dev0/en_us/icon.png" />
+<meta property="og:url" content="https://arconyx.github.io/hexchanting/v/1.1.3/1.0.dev0/en_us" />
+<meta property="og:description" content="The Hexchanting Book, all in one place." />
+<meta property="og:site_name" content="Hexchanting (1.1.3)" />
+      <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+      integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="index.css">
+      <link rel="stylesheet" href="textures.css">
+      <noscript>
+        <style>
+          /* for accessibility */
+          .spoilered {
+            filter: none !important;
+          }
+        </style>
+      </noscript>
+        <script type="module" src="index.js"></script>
+  <script type="module" src="hexcasting.js"></script>
+  <script type="module" src="hexcasting_render.js"></script>
+  </head>
+  <body>
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button
+        type="button"
+        class="navbar-toggle collapsed"
+        data-toggle="collapse"
+        data-target="#navbar-collapse"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../..">Hexchanting Book</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+            <li>
+    <a
+      href="https://github.com/arconyx/hexchanting/tree/e95113e2d2457fbc8ae918f70420fe10198b908a"
+        target="_blank"
+      class="navbar-link"
+      role="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >GitHub <i class="bi bi-box-arrow-up-right external-link-icon"></i></a>
+  </li>
+        <li class="dropdown">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >1.1.3 <span class="caret"></span></a>
+          <ul class="dropdown-menu" id="version-dropdown"></ul>
+        </li>
+        <li class="dropdown">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >English (United States) <span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-menu-left" id="lang-dropdown"></ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container" style="margin-top: 3em;">
+  <blockquote>
+      <h1><p>This is the online version of the Hexchanting documentation.</p></h1>
+      <p><strong>Entries which are blurred are spoilers</strong>. Click to reveal them, but be aware that they may spoil endgame progression. Alternatively, click <a href="?nospoiler">here</a> to get a version with all spoilers showing.</p>
+      <span id="old-version-notice" class="hidden">
+        <br />
+        <p><i>The past is a foreign country; they do things differently there.</i></p>
+      </span>
+  </blockquote>
+</div>
+<div class="container">
+<div id="table-of-contents"></div>
+<nav class="toc-container">
+  <h2 class="page-header">
+    Table of <span class="nobr">Contents<a
+      href="javascript:void(0)"
+      class="permalink toggle-link small"
+      data-target="toc-category"
+      title="Toggle all"
+    ><i class="bi bi-list-nested"></i></a><a
+    href="#table-of-contents"
+    class="permalink small toc-permalink"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></span>
+  </h2>
+    <details class="toc-category">
+      <summary><a href="#items" class="toc-elem "><img
+      title="Focus"
+      alt="Focus"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/cad/0_focus_empty.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    > Items</a></summary>
+      <ul>
+          <li><a href="#imbuing" class="toc-elem "><img
+      title="Amethyst Pickaxe"
+      alt="Amethyst Pickaxe"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_pickaxe.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    > Imbuing Equipment</a></li>
+      </ul>
+    </details>
+</nav>
+  <main class="book-body">
+<section id="items">
+    <h2 class="category-title page-header">
+    <img
+      title="Focus"
+      alt="Focus"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/cad/0_focus_empty.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >Items<a
+    href="#table-of-contents"
+    class="permalink small"
+    title="Jump to top"
+  ><i class="bi bi-box-arrow-up"></i></a><a
+    href="#items"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h2>
+    <p>I devote this section to the magical and mysterious items I might encounter in my studies.</p>
+<div id="imbuing" class="entry">
+    <h3 class="entry-title page-header">
+    <img
+      title="Amethyst Pickaxe"
+      alt="Amethyst Pickaxe"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_pickaxe.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >Imbuing Equipment<a
+    href="#table-of-contents"
+    class="permalink small"
+    title="Jump to top"
+  ><i class="bi bi-box-arrow-up"></i></a><a
+    href="#imbuing"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h3>
+    <p>I have found uses for many of Nature&#39;s resources outside of my work with <span style="color: #b38ef3">Hexes</span>, such as the construction of tools and armaments. It follows that I am able to do the same with amethyst. If I can align the crystalline structure correctly they can even channel media to cast Hexes.</p>
+<br />
+    <p>After experimentation I have found that charged amethyst works best when crafting equipment. By substituting it for a material like iron or diamond I can craft items with comparable performance to their diamond equivalents, though they are less durable. Their true strength is how they interact with the world. When used they resonate with the latent media in the surrounding environment, providing a guide for hexes channeled through them.</p>
+<br />
+    <p>Compromises have had to be made in the creation of these tools. They must be fed with external media when casting else they will cannibalize their own materials, possibly to the point of destruction. This is similar to a <a href="https://hexcasting.hexxy.media/v/0.11.2/1.0/en_us#items/hexcasting"><span style="color: #b0b">Cypher</span></a>, though these tools can be recharged.</p>
+<br />
+    <p>Regular use also slowly drains this reservoir - I believe the media is being expended to heal damage to the structure of the amethyst. Conventional means of equipment repair have proved ineffective due to difficulties in integrating a new matrix into the existing crystal.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Axe</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Axe"
+      alt="Amethyst Axe"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_axe.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div><div>
+    <h5>Amethyst Hoe</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Hoe"
+      alt="Amethyst Hoe"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_hoe.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div><div>
+    <h5>Amethyst Pickaxe</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Pickaxe"
+      alt="Amethyst Pickaxe"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_pickaxe.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div><div>
+    <h5>Amethyst Shovel</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Shovel"
+      alt="Amethyst Shovel"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_shovel.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div>    </div>
+  </details>
+<br />
+    <p>Axes, hoes, pickaxes and shovels cast after breaking a block. The stack is initialized with the location of the broken block. Break block spells cast through these tools behave as if broken by the tool, which includes any enchantment effects.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Sword</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Sword"
+      alt="Amethyst Sword"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_sword.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div>    </div>
+  </details>
+      <p>Swords cast on hit and push the targeted entity to the stack.</p>
+<br />
+    <p>My attempts to craft a bow on similar principles have failed. Amethyst simply doesn&#39;t have the flexibility required. I have instead resorted to crafting arrows with amethyst shards, in place of flint. These can be imbued like my other amethyst equipment but they can only draw on their internal media and affect a limited area. I am sure I could craft an equivalent out of media alone, but there are niches where I may find this useful.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Arrow</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Amethyst Shard"
+      alt="Amethyst Shard"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/amethyst_shard.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Stick"
+      alt="Stick"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/stick.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Feather"
+      alt="Feather"
+      src="https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/a14c64362abe4a12c2dfd87f8d1673af9d1b09f4/data/1.20.2/items/feather.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div></div>  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Arrow"
+      alt="Amethyst Arrow"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_arrow.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    ><div class="badge item-texture-count">4</div>
+  </div>
+    </div>
+</div>    </div>
+  </details>
+      <p>Arrows cast when striking an entity or a block. In the first case the entity is pushed to the stack, in the latter the block position. Arrows have an amethyst shard&#39;s worth of media and a 4 block ambit radius.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Helmet</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Helmet"
+      alt="Amethyst Helmet"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_helmet.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div>    </div>
+  </details>
+      <p>Helmets casts when a mob, hostile or otherwise, begins to target me. The identity of the mob is pushed to the stack.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Chestplate</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Chestplate"
+      alt="Amethyst Chestplate"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_chestplate.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div>    </div>
+  </details>
+      <p>Chestplates cast when I take damage. Two nullable entities and the amount of damage are pushed to the stack. The first entity is the direct source of the damage, such as an arrow, and the second is the indirect source, such as whoever fired the arrow.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Leggings</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Leggings"
+      alt="Amethyst Leggings"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_leggings.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div>    </div>
+  </details>
+      <p>Leggings cast in the unfortunate event of my death. The source of my demise is pushed to the stack, in the same form as the chestplate. Because I am no longer alive to serve as a conduit this will always use the legging&#39;s internal media.</p>
+<br />
+  <details class="details-collapsible recipe-details">
+      <summary class="collapse-details">
+    <span class="collapse-recipe-show">Click to show recipes</span>
+    <span class="collapse-recipe-hide">Click to hide recipes</span>
+  </summary>
+    <div class="crafting-tables">
+<div>
+    <h5>Amethyst Boots</h5>
+    <div class="crafting-table">
+        <img
+      title="Crafting Table"
+      alt="Crafting Table"
+      src="https://raw.githubusercontent.com/hexdoc-dev/hexdoc/780c5ccff48c7c103ebd679b7774d3dfd36ba4f9/src/hexdoc/_export/resources/assets/minecraft/textures/gui/hexdoc/crafting_table.png"
+      class="texture pixelated"
+    >
+  <div class="crafting-table-grid">
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+        <div></div>        <div class="texture item-texture multi-textures cycle-textures">
+                <img
+      title="Charged Amethyst"
+      alt="Charged Amethyst"
+      src="https://raw.githubusercontent.com/FallingColors/HexMod/5831d9e2867f2369b8016aed83fbbd401fd7ad3d/Common/src/main/resources/assets/hexcasting/textures/item/charged_amethyst.png"
+      loading="lazy"
+      class="item-texture multi-texture-active texture pixelated"
+    >
+        </div>
+  </div>
+  <div class="crafting-table-result recipe-item-slot">
+    <img
+      title="Amethyst Boots"
+      alt="Amethyst Boots"
+      src="https://raw.githubusercontent.com/arconyx/hexchanting/e95113e2d2457fbc8ae918f70420fe10198b908a/src/main/resources/assets/hexchanting/textures/item/amethyst_boots.png"
+      loading="lazy"
+      class="item-texture  texture pixelated"
+    >
+  </div>
+    </div>
+</div>    </div>
+  </details>
+      <p>Boots cast whenever I fall about 1.5 blocks, pushing the precise distance to the stack. This trigger is sensitive and can be fooled into resetting by going up.</p>
+<br />
+  <div id="imbuing@hexchanting:imbue_equipment" class="">
+<h4 class="pattern-title">Imbue Equipment ([pattern] →)<a
+    href="#imbuing@hexchanting:imbue_equipment"
+    class="permalink small"
+    title="Permalink"
+  ><i class="bi bi-link-45deg"></i></a></h4>
+  <details class="details-collapsible">
+    <summary class="collapse-details collapse-spell"></summary>
+    <div class="dropdown spell-settings-dropdown">
+      <span
+        href=""
+        class="dropdown-toggle spell-settings-toggle"
+        data-toggle="dropdown"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="bi bi-gear-fill"></i>
+      </span>
+      <ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Renders</a>
+          <ul class="dropdown-menu dropdown-menu-left render-dropdowns"></ul>
+        </li>
+        <li class="dropdown-submenu">
+          <a
+            href=""
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Palettes</a>
+          <ul class="dropdown-menu dropdown-menu-left palette-dropdowns"></ul>
+        </li>
+      </ul>
+    </div>
+      <canvas
+        class="spell-viz"
+        width="216"
+        height="216"
+        data-string="dqaqdqaqdqaeadawadadawadadawa"
+        data-start="west"
+        data-per-world="False"
+      >Your browser does not support visualizing patterns. Pattern code: dqaqdqaqdqaeadawadadawadadawa</canvas>
+  </details>
+      <p>Imbues the supplied hexes into the amethyst equipment in my other hand, so that they will be cast whenever the item is used. Costs 9 charged amethyst except on arrows, which cost 5 shards.</p>
+  </div>
+<br />
+</div>
+</section>
+  </main>
+</div>
+      <footer class="footer">
+        <div class="container text-muted">
+          <p>Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p><p>Minecraft content and materials are the intellectual property of their respective owners.</p><p>Made with ❤️ using <a href="https://pypi.org/project/hexdoc/" target="_blank">hexdoc</a>.</p>
+        </div>
+      </footer>
+  </body>
+</html>
