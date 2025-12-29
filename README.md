@@ -24,6 +24,10 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - Disable or reduce particles
 - ???
 
+## Config
+
+The chestplate damage trigger ignores damage types listed in the tag `hexchanting:bypasses_armour_trigger`. By default this includes only `generic_kill` (as used by `/kill`).
+
 ## Notes
 
 - Cast on mine doesn't work in creative because it bypasses the tool entirely.
