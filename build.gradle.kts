@@ -6,6 +6,7 @@ plugins {
     id("maven-publish")
     id("org.jetbrains.kotlin.jvm") version "2.1.10"
     id("com.modrinth.minotaur") version "2.+"
+    id("org.gradlex.reproducible-builds") version "1.1"
 }
 
 val mod_version: String by project
