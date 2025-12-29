@@ -136,6 +136,7 @@ modrinth {
     projectId.set("hexchanting")
     versionType.set("release") // This is the default -- can also be `beta` or `alpha`
     uploadFile.set(tasks.remapJar) // With Loom, this MUST be set to `remapJar` instead of `jar`!
+    additionalFiles.add(tasks.remapSourcesJar)
     gameVersions.add("1.20.1") // Must be an array, even with only one version
     loaders.add("fabric") // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
     dependencies { // A special DSL for creating dependencies
