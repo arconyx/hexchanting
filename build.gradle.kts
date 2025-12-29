@@ -131,7 +131,6 @@ modrinth {
     // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail
     // Just make sure it stays private!
     token.set(System.getenv("MODRINTH_TOKEN"))
-    token.set("placeholder")
     // This can be the project ID or the slug. Either will work!
     projectId.set("hexchanting")
     versionType.set("release") // This is the default -- can also be `beta` or `alpha`
