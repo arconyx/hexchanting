@@ -16,6 +16,7 @@ on:
         options:
           - none
           - PyPI
+          # - TestPyPI
 
 permissions:
   contents: read
@@ -26,26 +27,15 @@ env:
   # for example: https://hexcasting.hexxy.media/v/latest/main/en_us/
   HEXDOC_BRANCHES: '["main"]'
 
-# TODO: Find a way to condense the release logic to one spot
 jobs:
-  configure:
-    runs-on: ubuntu-latest
-    outputs:
-      release: ${{ inputs.release == true || github.event_name == 'push' && startsWith(github.ref, 'refs/tags') }}
-    steps:
-      - name: Placeholder noop
-        run: echo "hello world"
-        
-  
   build-hexdoc:
-    needs: configure
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: read
     outputs:
       pages-url: ${{ steps.build.outputs.pages-url }}
-      deploy: ${{ github.event_name != 'pull_request' && contains(fromJson(env.HEXDOC_BRANCHES), github.ref_name) || needs.configure.outputs.release == true}}
+      deploy: ${{ github.event_name != 'pull_request' && contains(fromJson(env.HEXDOC_BRANCHES), github.ref_name) || inputs.release == true }}
     steps:
       - uses: actions/checkout@v4
 
@@ -66,12 +56,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release: ${{ needs.configure.outputs.release == true }}
+          release: ${{ inputs.release == true }}
 
   deploy-pages:
-    needs:
-      - configure
-      - build-hexdoc
+    needs: build-hexdoc
     if: needs.build-hexdoc.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     concurrency:
@@ -97,7 +85,7 @@ jobs:
       - name: Merge new hexdoc build into existing book
         uses: hexdoc-dev/actions/merge@v1
         with:
-          release: ${{ needs.configure.outputs.release == true }}
+          release: ${{ inputs.release == true }}
           site-url: ${{ needs.build-hexdoc.outputs.pages-url }}
 
       # if you want to add extra things to your website (eg. Javadoc/Dokka), add it to _site/dst/docs here
@@ -105,16 +93,15 @@ jobs:
       - name: Deploy to Pages
         uses: hexdoc-dev/actions/deploy-pages@v1
         with:
-          release: ${{ needs.configure.outputs.release == true }}
+          release: ${{ inputs.release == true }}
           merge: false
 
   publish-pypi:
     runs-on: ubuntu-latest
     needs:
-      - configure
       - build-hexdoc
       - deploy-pages
-    if: needs.configure.outputs.release == true && inputs.package-index == 'PyPI'
+    if: inputs.release == true && inputs.package-index == 'PyPI'
     environment:
       name: pypi
       url: https://pypi.org/p/${{ env.PYPI_PACKAGE }}
@@ -130,3 +117,27 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
+  # Uncomment if you want to try publishing to TestPyPI before using the real index.
+
+  # publish-testpypi:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #    - build-hexdoc
+  #    - deploy-pages
+  #   if: inputs.package-index == 'TestPyPI'
+  #   environment:
+  #     name: testpypi
+  #     url: https://test.pypi.org/p/${{ env.PYPI_PACKAGE }}
+  #   permissions:
+  #     id-token: write
+  #   steps:
+  #     - name: Download package artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: hexdoc-build
+  #         path: dist
+
+  #     - name: Publish to TestPyPI
+  #       uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         repository-url: https://test.pypi.org/legacy/
