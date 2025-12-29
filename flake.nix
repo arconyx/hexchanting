@@ -22,7 +22,7 @@
               libglvnd
               xorg.libX11
               python312
-              nodejs_20
+              uv
             ];
             LD_LIBRARY_PATH = ''${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.libglvnd}/lib:${pkgs.xorg.libX11}/lib'';
           };
