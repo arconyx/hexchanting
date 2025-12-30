@@ -5,16 +5,21 @@ on:
     tags: ['v[0-9].[0-9].[0-9]']
 
 permissions:
-  contents: write # write needed for releases
-  # these are needed for attestations
-  id-token: write
-  attestations: write
-  artifact-metadata: write
+  contents: read
+
+env:
+  PYPI_PACKAGE: hexdoc-hexchanting
 
 jobs:
-  build:
+  build-release:
     runs-on: ubuntu-latest
     environment: modrinth
+    permissions:
+      contents: write # write needed for releases
+      # these are needed for attestations
+      id-token: write
+      attestations: write
+      artifact-metadata: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -69,3 +74,79 @@ jobs:
           overwrite_files: false
           fail_on_unmatched_files: true
           generate_release_notes: true
+
+  build-hexdoc:
+    needs: build-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    outputs:
+      pages-url: ${{ steps.build.outputs.pages-url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+      - uses: astral-sh/setup-uv@v7
+        with:
+          activate-environment: true
+          enable-cache: true
+      - name: Sync dependencies
+        run: uv sync --frozen --no-dev
+      - id: build
+        uses: hexdoc-dev/actions/build@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release: true
+
+  deploy-pages:
+    needs: build-hexdoc
+    runs-on: ubuntu-latest
+    concurrency:
+      group: hexdoc-deploy-pages
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+      - uses: astral-sh/setup-uv@v6
+        with:
+          activate-environment: true
+          enable-cache: true
+      - name: Sync dependencies
+        run: uv sync --frozen --no-dev
+      - name: Merge new hexdoc build into existing book
+        uses: hexdoc-dev/actions/merge@v1
+        with:
+          release: true
+          site-url: ${{ needs.build-hexdoc.outputs.pages-url }}
+      # if you want to add extra things to your website (eg. Javadoc/Dokka), add it to _site/dst/docs here
+      - name: Deploy to Pages
+        uses: hexdoc-dev/actions/deploy-pages@v1
+        with:
+          release: true
+          merge: false
+
+  publish-pypi:
+    runs-on: ubuntu-latest
+    needs:
+      - build-hexdoc
+      - deploy-pages
+    environment:
+      name: pypi
+      url: https://pypi.org/p/${{ env.PYPI_PACKAGE }}
+    permissions:
+      id-token: write
+    steps:
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hexdoc-build
+          path: dist
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
