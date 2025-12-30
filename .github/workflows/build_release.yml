@@ -2,36 +2,70 @@ name: Publish release
 
 on:
   push:
-    tags: "v*"
-  workflow_dispatch:
-    inputs:
-      release:
-        description: Release this version
-        type: boolean
-        default: false
+    tags: ['v[0-9].[0-9].[0-9]']
+
+permissions:
+  contents: write # write needed for releases
+  # these are needed for attestations
+  id-token: write
+  attestations: write
+  artifact-metadata: write
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     environment: modrinth
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-      - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v4
-      - name: setup jdk
-        uses: actions/setup-java@v4
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Verify mod_version matches tag
+        run: |
+          # match mod_version=1.2.3
+          # spaces are accepted around the =
+          MOD_VERSION=$(sed -nE 's/^mod_version[[:space:]]*=[[:space:]]*([0-9]+\.[0-9]+\.[0-9])$/\1/p' gradle.properties)
+          echo "mod_version: '$MOD_VERSION'"
+          if [ -z "$MOD_VERSION" ]; then
+            echo "::error::Could not parse a valid X.Y.Z version from gradle.properties"
+            exit 1
+          fi
+          
+          # tag has a v prefix we want to strip
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          echo "tag_version: '$TAG_VERSION'"
+          
+          if [ "$MOD_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Version mismatch! gradle.properties ($MOD_VERSION) != tag ($TAG_VERSION)"
+            exit 1
+          fi
+          
+          echo "Version in gradle.properties matches tag"
+      - name: Setup JDK
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
-          distribution: 'microsoft'
-      - name: make gradle wrapper executable
-        run: chmod +x ./gradlew
-      - name: build
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Create Modrinth release
         run: ./gradlew modrinth
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-      - name: capture build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Capture build artifacts
+        uses: actions/upload-artifact@v6
         with:
-          name: ReleaseArtifacts
           path: build/libs/
+          if-no-files-found: error
+      - name: Attest build
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: 'build/libs/**'
+      - name: Create Github release
+        # This pins to a commit sha because it's from a random user
+        # Github, for some reason, deprecated their own action for this.
+        # This commit is for the 2.5.0 release
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
+        with:
+          files: 'build/libs/**'
+          overwrite_files: false
+          fail_on_unmatched_files: true
+          generate_release_notes: true
