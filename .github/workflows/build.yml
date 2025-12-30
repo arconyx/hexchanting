@@ -1,30 +1,36 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
+name: Build
+on:
+  pull_request:
+  push:
+    # in some ways I would prefer paths-ignore to be more
+    # resilient against changes but this list is half the length
+    paths:
+      - 'libs/**'
+      - 'src.**'
+      - '*.gradle.kts'
+      - 'gradle**'
+      - '.github/workflows/build.yml'
 
-name: build
-on: [pull_request, push]
+permissions:
+  contents: read
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-      - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v4
-      - name: setup jdk
-        uses: actions/setup-java@v4
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup JDK
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
-          distribution: 'microsoft'
-      - name: make gradle wrapper executable
-        run: chmod +x ./gradlew
-      - name: build
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Build Hexchanting
         run: ./gradlew build
-      - name: capture build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Capture build artifacts
+        uses: actions/upload-artifact@v6
         with:
-          name: Artifacts
           path: build/libs/
+          if-no-files-found: error
