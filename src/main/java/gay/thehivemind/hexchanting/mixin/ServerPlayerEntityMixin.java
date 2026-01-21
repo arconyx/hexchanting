@@ -9,8 +9,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -57,8 +59,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     public void triggerLeggingsOnDeath(DamageSource source, Operation<Void> original) {
         // We want to trigger the spell after items have been splattered, but we need to check the player's
         // inventory before that else the armour won't be present
-        Optional<ItemStack> hexPantsStack = StreamSupport.stream(this.getArmorItems().spliterator(), false)
+        Optional<Pair<ItemStack,HexArmorItem>> hexPantsStack = StreamSupport.stream(this.getArmorItems().spliterator(), false)
                 .filter((ItemStack stack) -> stack.getItem() instanceof HexArmorItem armour && armour.getType() == ArmorItem.Type.LEGGINGS)
+                .map((ItemStack stack) -> new Pair<>(stack, (HexArmorItem) stack.getItem()))
                 .findFirst();
 
         // Always need to call the original function
@@ -66,8 +69,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 
         // If the armour is present then cast
         // FIX: There'll be no media available so this will draw from the item
-        hexPantsStack.ifPresent((ItemStack stack) -> {
-            ((HexArmorItem) stack.getItem()).castOnDeath(stack, source, this);
+        hexPantsStack.ifPresent((Pair<ItemStack,HexArmorItem> pair) -> {
+            pair.getRight().castOnDeath(pair.getLeft(), source, this);
         });
     }
 }
