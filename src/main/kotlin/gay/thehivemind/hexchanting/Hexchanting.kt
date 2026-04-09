@@ -1,19 +1,23 @@
 package gay.thehivemind.hexchanting
 
 import gay.thehivemind.hexchanting.casting.HexchantingPatterns
+import gay.thehivemind.hexchanting.config.HexchantingProperties
 import gay.thehivemind.hexchanting.items.HexchantingItems
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.loader.api.FabricLoader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 object Hexchanting : ModInitializer {
     const val MOD_ID = "hexchanting"
     val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
+    lateinit var CONFIG: HexchantingProperties
 
     override fun onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
+        this.CONFIG = HexchantingProperties.fromPath(
+            FabricLoader.getInstance().configDir.resolve("hexchanting.properties"), copyDefault = true)
+
+        // call to init some registries
         HexchantingItems
         HexchantingPatterns.init()
     }

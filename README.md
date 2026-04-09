@@ -26,17 +26,22 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 
 ## Config
 
-The chestplate damage trigger ignores damage types listed in the tag `hexchanting:bypasses_armour_trigger`. By default this includes only `generic_kill` (as used by `/kill`).
+### Data pack
+The chestplate damage trigger ignores damage types listed in the tag `hexchanting:bypasses_armour_trigger`. By default,
+this includes only `generic_kill` (as used by `/kill`).
+
+### Config File
+Additional config options are set in `config/hexchanting.properties`. A [default configuration file](resources/hexchanting.properties)
+will be generated on launch and documentation can be found there.
 
 ## Notes
 
 - Cast on mine doesn't work in creative because it bypasses the tool entirely.
 - This is mostly made for personal use. Updates will be sporadic.
-- If you want to know what you can do with this, go read the license. I encourage you to tweak it, port it, borrow parts
-  or whatever else you want to do and share the results with the world.
+- If you want to know what you can do with this, go read the licence. I encourage you to tweak it, port it, borrow parts
+  or whatever else you want to do and share the results with the world. PRs welcome.
 - I am indebted to miyucomics and TechTastic, not that they know it, since their
   projects [Hexcellular](https://github.com/miyucomics/hexcellular/) and [HexWeb](https://github.com/TechTastic/HexWeb)
   were valuable reference points when I was getting started.
-- Also to everyone involved in making [HexDoc](https://github.com/hexdoc-dev/hexdoc) because they made documentation
-  easy.
+- Also to everyone involved in making [HexDoc](https://github.com/hexdoc-dev/hexdoc) because they made documentation easy.
 - And to everyone who has offered feedback in the Hex Casting Discord.
