@@ -4,28 +4,42 @@
   outputs =
     { nixpkgs, ... }:
     let
+      lib = nixpkgs.lib;
       # being a bit elaborate by passing pkgs as part of forAllSystems
       # instead of just generating it as needed
       packagesForSystem = system: nixpkgs.legacyPackages.${system};
       # f is a function system (str) -> packages (attrset) -> attrset
       forAllSystems =
-        f:
-        nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system: f system (packagesForSystem system));
+        f: lib.genAttrs lib.systems.flakeExposed (system: f system (packagesForSystem system));
     in
     {
       devShells = forAllSystems (
         system: pkgs: {
-          default = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; [
-              stdenv.cc.cc.lib
-              jdk21
-              libglvnd
-              xorg.libX11
-              python312
-              uv
-            ];
-            LD_LIBRARY_PATH = ''${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.libglvnd}/lib:${pkgs.xorg.libX11}/lib'';
-          };
+          default =
+            let
+              libs = with pkgs; [
+                libGL
+                glfw3-minecraft
+                pipewire
+                flite
+              ];
+            in
+            pkgs.mkShell {
+              nativeBuildInputs = with pkgs; [
+                jdk21
+
+                # for hexdoc
+                python312
+                uv
+              ];
+
+              buildInputs = libs;
+
+              env = {
+                LD_LIBRARY_PATH = lib.makeLibraryPath libs;
+                JAVA_HOME = pkgs.jdk21.home;
+              };
+            };
         }
       );
     };
