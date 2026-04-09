@@ -34,6 +34,9 @@ this includes only `generic_kill` (as used by `/kill`).
 Additional config options are set in `config/hexchanting.properties`. A [default configuration file](resources/hexchanting.properties)
 will be generated on launch and documentation can be found there.
 
+The chestplate trigger resolution order can be adjusted here, so that damage is applied before or after the chestplate
+hex is triggered. This is the default and historical behaviour. Adjust to taste.
+
 ## Notes
 
 - Cast on mine doesn't work in creative because it bypasses the tool entirely.

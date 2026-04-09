@@ -19,6 +19,14 @@ import java.util.Properties
  * The default configuration file lives in the mod resources folder.
  */
 data class HexchantingProperties(
+    /**
+     * The amethyst chestplate triggers a hex when the player is damaged.
+     * When `true` the damage is applied to the player and then the hex is triggered. The damage value provided to the
+     * hex has armour, enchantments and absorption applied.
+     * When `false` the hex is triggered and then damage is applied. This permits tricks like applying absorption
+     * to negate the damage. Modifiers to the damage are not applied to the damage value sent to the hex.
+     */
+    val applyDamageBeforeChestplateTrigger: Boolean,
 ) {
     companion object {
         /**
@@ -32,6 +40,7 @@ data class HexchantingProperties(
 
             return when (val version = getOptionalLong(properties, "version", 1)) {
                 1L -> HexchantingProperties(
+                    applyDamageBeforeChestplateTrigger = getOptionalBoolean(properties, "applyDamageBeforeChestplateTrigger", false)
                 )
                 else -> throw RuntimeException("Invalid properties version $version. Accepted values: 1")
             }
