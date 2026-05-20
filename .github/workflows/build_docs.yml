@@ -36,14 +36,16 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version-file: .python-version
-      - uses: astral-sh/setup-uv@v7
+        # v8.1.0
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
         with:
           activate-environment: true
           enable-cache: true
       - name: Sync dependencies
         run: uv sync --frozen --no-dev
       - id: build
-        uses: hexdoc-dev/actions/build@v1
+        # v1.0.4
+        uses: hexdoc-dev/actions/build@632579eb9d6da75e1d697fdf4232356d7ef25f51
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -63,20 +65,23 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version-file: .python-version
-      - uses: astral-sh/setup-uv@v7
+      # v8.1.0
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
         with:
           activate-environment: true
           enable-cache: true
       - name: Sync dependencies
         run: uv sync --frozen --no-dev
       - name: Merge new hexdoc build into existing book
-        uses: hexdoc-dev/actions/merge@v1
+        # v1.0.4
+        uses: hexdoc-dev/actions/merge@632579eb9d6da75e1d697fdf4232356d7ef25f51
         with:
           release: false
           site-url: ${{ needs.build-hexdoc.outputs.pages-url }}
       # if you want to add extra things to your website (eg. Javadoc/Dokka), add it to _site/dst/docs here
       - name: Deploy to Pages
-        uses: hexdoc-dev/actions/deploy-pages@v1
+        # v1.0.4
+        uses: hexdoc-dev/actions/deploy-pages@632579eb9d6da75e1d697fdf4232356d7ef25f51
         with:
           release: false
           merge: false

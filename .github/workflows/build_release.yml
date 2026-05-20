@@ -50,25 +50,26 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+        # v6.1.0
+        uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e
       - name: Create Modrinth release
         run: ./gradlew modrinth
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
       - name: Capture build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@7
         with:
           path: build/libs/
           if-no-files-found: error
       - name: Attest build
-        uses: actions/attest-build-provenance@v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-path: 'build/libs/**'
       - name: Create Github release
         # This pins to a commit sha because it's from a random user
         # Github, for some reason, deprecated their own action for this.
         # This commit is for the 2.5.0 release
-        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
+        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda
         with:
           files: 'build/libs/**'
           overwrite_files: false
@@ -88,14 +89,16 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version-file: .python-version
-      - uses: astral-sh/setup-uv@v7
+        # v8.1.0
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
         with:
           activate-environment: true
           enable-cache: true
       - name: Sync dependencies
         run: uv sync --frozen --no-dev
       - id: build
-        uses: hexdoc-dev/actions/build@v1
+        # v1.0.4
+        uses: hexdoc-dev/actions/build@632579eb9d6da75e1d697fdf4232356d7ef25f51
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -110,24 +113,27 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version-file: .python-version
-      - uses: astral-sh/setup-uv@v6
+        # v8.1.0
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
         with:
           activate-environment: true
           enable-cache: true
       - name: Sync dependencies
         run: uv sync --frozen --no-dev
       - name: Merge new hexdoc build into existing book
-        uses: hexdoc-dev/actions/merge@v1
+        # v1.0.4
+        uses: hexdoc-dev/actions/merge@632579eb9d6da75e1d697fdf4232356d7ef25f51
         with:
           release: true
           site-url: ${{ needs.build-hexdoc.outputs.pages-url }}
       # if you want to add extra things to your website (eg. Javadoc/Dokka), add it to _site/dst/docs here
       - name: Deploy to Pages
-        uses: hexdoc-dev/actions/deploy-pages@v1
+        # v1.0.4
+        uses: hexdoc-dev/actions/deploy-pages@632579eb9d6da75e1d697fdf4232356d7ef25f51
         with:
           release: true
           merge: false
@@ -144,9 +150,10 @@ jobs:
       id-token: write
     steps:
       - name: Download package artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: hexdoc-build
           path: dist
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        # v1.4.0
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
