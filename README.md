@@ -42,6 +42,12 @@ hex is triggered. This is the default and historical behaviour. Adjust to taste.
 A Nix flake is provided in this repository. This defines a stable development environment but isn't doing anything
 special. Any standard Java/Kotlin setup should work.
 
+### Tests
+Hexchanting uses the Minecraft gametests system. These tests are run as part of the
+standard gradle `build` target. They can also be run by the `runGameTest` target and the
+`runClientGameTest` target. The latter is useful for debugging tests as you can trigger
+specific tests with the in-game `/test run` command.
+
 ### Reproducibility
 The [org.gradlex.reproducible-builds](https://gradlex.org/reproducible-builds/) plugin is used to set defaults for 
 Gradle's builtin tasks that aid reproducibility. Non-reproducible builds are considered low priority bugs. However,
