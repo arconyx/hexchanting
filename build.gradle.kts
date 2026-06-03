@@ -89,6 +89,16 @@ buildscript {
     }
 }
 
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "${project.name}-test"
+        enableGameTests = true
+        enableClientGameTests = true
+        eula = true // Agree to the Minecraft EULA.
+    }
+}
+
 tasks.processResources {
     inputs.property("version", project.version)
     filesMatching("fabric.mod.json") {
