@@ -47,6 +47,13 @@ Gradle [lockfiles](https://docs.gradle.org/current/userguide/dependency_locking.
 to specific version numbers. Lockfiles can be updated using the `--write-locks` flag. This may need to be paired with a
 build target such as `gradle build --write-locks` so that all dependencies are resolved.
 
+### Tests
+Hexchanting uses the Minecraft gametests system. These tests are run as part of the
+standard gradle `build` target. They can also be run by the `runGameTest` target and the
+`runClientGameTest` target. The latter is useful for debugging tests as you can trigger
+specific tests with the in-game `/test run` command.
+
+>>>>>>> conflict 1 of 1 ends
 ### Reproducibility
 The [org.gradlex.reproducible-builds](https://gradlex.org/reproducible-builds/) plugin is used to set defaults for 
 Gradle's builtin tasks that aid reproducibility. Non-reproducible builds are considered low priority bugs. However,
