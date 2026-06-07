@@ -18,7 +18,10 @@ object Hexchanting : ModInitializer {
             FabricLoader.getInstance().configDir.resolve("hexchanting.properties"), copyDefault = true)
 
         // call to init some registries
+
+        @Suppress("UnusedExpression")
         HexchantingItems
-        HexchantingPatterns.init()
+        @Suppress("UnusedExpression")
+        HexchantingPatterns
     }
 }
