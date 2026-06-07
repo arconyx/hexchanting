@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - 'libs/**'
-      - 'src.**'
+      - 'src/**'
       - '*.gradle.kts'
       - 'gradle**'
       - '.github/workflows/build.yml'
@@ -12,7 +12,7 @@ on:
     # resilient against changes but this list is half the length
     paths:
       - 'libs/**'
-      - 'src.**'
+      - 'src/**'
       - '*.gradle.kts'
       - 'gradle**'
       - '.github/workflows/build.yml'
