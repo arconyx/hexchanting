@@ -12,6 +12,14 @@ on:
       - 'uv.lock'
       - '.github/workflows/build_docs.yml'
   pull_request:
+    paths:
+      - 'doc/**'
+      - 'src/**'
+      - 'LICENSE'
+      - 'README.md'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/build_docs.yml'
 
 permissions:
   contents: read
