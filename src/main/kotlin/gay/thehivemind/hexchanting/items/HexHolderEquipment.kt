@@ -95,13 +95,8 @@ interface HexHolderEquipment : HexImbuedItem {
         // TODO: but not for armour. investigate
         val context = PackagedToolCastEnv(player, Hand.MAIN_HAND, itemStack)
 
-        // Create empty casting image
-        var castingImage = CastingImage()
-        // prepare stack
-        val castingStack = castingImage.stack.toMutableList()
-        // We don't need to add the player to the stack, Mind's Reflection exists
-        castingStack.addAll(stack)
-        castingImage = castingImage.copy(stack = castingStack.toList())
+        // We have to use copy to create a casting image with a given stack because the constructor is private
+        val castingImage = CastingImage().copy(stack = stack)
 
         val vm = CastingVM(castingImage, context)
         val clientView = vm.queueExecuteAndWrapIotas(instructions, world)
