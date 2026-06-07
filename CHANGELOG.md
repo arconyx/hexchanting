@@ -1,3 +1,14 @@
+# Unreleased
+### Breaking Changes
+- Bump minimum Hex Casting version to 0.11.3
+
+### Other Changes
+- Version constraints on runtime dependencies in `fabric.mod.json` have been
+tightened to exclude unlikely and probably broken combinations. The Minecraft
+version has been locked to 1.20.1 and Fabric Language Kotlin has been limited
+to versions <2.0. This should not break existing installations provided they use
+Hex Casting 0.11.3.
+
 # v1.2.0
 You can now control whether the chestplate damage trigger fires before or after
 the damage is applied to the player.
