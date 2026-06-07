@@ -13,13 +13,12 @@ import net.minecraft.util.Identifier
 object HexchantingPatterns {
     val HEX_IMBUE_EQUIPMENT = register("imbue_equipment", "dqaqdqaqdqaeadawadadawadadawa", HexDir.WEST, OpImbueEquipment())
 
-    private fun register(name: String, signature: String, startDir: HexDir, action: Action): HexPattern {
+    private fun register(name: String, signature: String, startDir: HexDir, action: Action): ActionRegistryEntry {
         val pattern = HexPattern.fromAngles(signature, startDir)
-        Registry.register(
+        return Registry.register(
             HexActions.REGISTRY,
             Identifier.of(MOD_ID, name),
             ActionRegistryEntry(pattern, action)
         )
-        return pattern
     }
 }
