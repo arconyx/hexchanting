@@ -79,7 +79,7 @@ dependencies {
 // lock dependencies
 dependencyLocking {
     lockAllConfigurations()
-    lockMode = LockMode.STRICT
+    lockMode = LockMode.LENIENT
 }
 
 // lock plugins
