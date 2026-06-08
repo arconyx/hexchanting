@@ -1,12 +1,6 @@
 name: Build
 on:
   pull_request:
-    paths:
-      - 'libs/**'
-      - 'src/**'
-      - '*.gradle.kts'
-      - 'gradle**'
-      - '.github/workflows/build.yml'
   push:
     # in some ways I would prefer paths-ignore to be more
     # resilient against changes but this list is half the length
