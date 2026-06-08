@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("fabric-loom") version "1.10-SNAPSHOT"
+    id("net.fabricmc.fabric-loom-remap") version "1.17.2"
     id("maven-publish")
     id("org.jetbrains.kotlin.jvm") version "2.4.0"
     id("com.modrinth.minotaur") version "2.+"
@@ -74,6 +74,19 @@ dependencies {
     modLocalRuntime("com.samsthenerd.inline:inline-fabric:$minecraft_version-$inline_version")
     // We crash on launch without this. I have no idea why, I'm just stealing Hexcellular's solution
     modLocalRuntime(files("${rootProject.rootDir}/libs/serialization-hooks-0.4.99999.jar"))
+}
+
+// lock dependencies
+dependencyLocking {
+    lockAllConfigurations()
+    lockMode = LockMode.STRICT
+}
+
+// lock plugins
+buildscript {
+    configurations.classpath {
+        resolutionStrategy.activateDependencyLocking()
+    }
 }
 
 tasks.processResources {

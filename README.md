@@ -42,6 +42,11 @@ hex is triggered. This is the default and historical behaviour. Adjust to taste.
 A Nix flake is provided in this repository. This defines a stable development environment but isn't doing anything
 special. Any standard Java/Kotlin setup should work.
 
+### Dependencies
+Gradle [lockfiles](https://docs.gradle.org/current/userguide/dependency_locking.html) are enabled. They lock dependencies
+to specific version numbers. Lockfiles can be updated using the `--write-locks` flag. This may need to be paired with a
+build target such as `gradle build --write-locks` so that all dependencies are resolved.
+
 ### Reproducibility
 The [org.gradlex.reproducible-builds](https://gradlex.org/reproducible-builds/) plugin is used to set defaults for 
 Gradle's builtin tasks that aid reproducibility. Non-reproducible builds are considered low priority bugs. However,
