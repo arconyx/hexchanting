@@ -11,7 +11,6 @@ import gay.thehivemind.hexchanting.casting.HexchantingPatterns
 import gay.thehivemind.hexchanting.items.HexImbuedItem
 import gay.thehivemind.hexchanting.items.HexchantingItems
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest
-import net.minecraft.block.Blocks
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.test.GameTest
 import net.minecraft.test.GameTestException
@@ -20,12 +19,6 @@ import net.minecraft.util.Hand
 
 class HexchantingGameTest : FabricGameTest {
     val logger = Hexchanting.LOGGER
-
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    fun test(context: TestContext) {
-        context.expectBlock(Blocks.STRUCTURE_BLOCK, 0, 0, 0);
-        context.complete()
-    }
 
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingChestplate(context: TestContext) {
