@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("fabric-loom") version "1.10-SNAPSHOT"
     id("maven-publish")
-    id("org.jetbrains.kotlin.jvm") version "2.1.10"
+    id("org.jetbrains.kotlin.jvm") version "2.4.0"
     id("com.modrinth.minotaur") version "2.+"
     id("org.gradlex.reproducible-builds") version "1.1"
 }
@@ -79,7 +79,7 @@ dependencies {
 tasks.processResources {
     inputs.property("version", project.version)
     filesMatching("fabric.mod.json") {
-        expand("version" to inputs.properties["version"])
+        expand(mutableMapOf("version" to inputs.properties["version"]))
     }
 }
 
