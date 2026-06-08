@@ -1,5 +1,6 @@
 package gay.thehivemind.hexchanting
 
+import at.petrak.hexcasting.api.casting.eval.ExecutionClientView
 import at.petrak.hexcasting.api.casting.eval.SpecialPatterns
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.PatternIota
@@ -7,6 +8,7 @@ import at.petrak.hexcasting.api.casting.math.HexPattern
 import at.petrak.hexcasting.common.lib.HexItems
 import at.petrak.hexcasting.common.lib.hex.HexActions
 import at.petrak.hexcasting.xplat.IXplatAbstractions
+import com.mojang.authlib.GameProfile
 import gay.thehivemind.hexchanting.casting.HexchantingPatterns
 import gay.thehivemind.hexchanting.items.HexImbuedItem
 import gay.thehivemind.hexchanting.items.HexchantingItems
@@ -14,19 +16,33 @@ import net.fabricmc.fabric.api.gametest.v1.FabricGameTest
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.network.ClientConnection
+import net.minecraft.network.NetworkSide
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.test.GameTest
 import net.minecraft.test.GameTestException
 import net.minecraft.test.TestContext
 import net.minecraft.util.Hand
+import net.minecraft.world.GameMode
+import java.util.*
 
 class HexchantingGameTest : FabricGameTest {
     val logger = Hexchanting.LOGGER
+    val getCasterHex = actionsAsPatternIota(HexActions.GET_CASTER.prototype)
 
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingArrow(context: TestContext) {
-        val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_ARROW, player, context)
+        val player = createMockSurvivalServerPlayerInWorld(context)
+
+        // Attempt with no media, expected to fail
+        val attempt = imbueItemUsingStaff(HexchantingItems.HEX_ARROW, player, getCasterHex)
+        context.assertFalse(attempt.resolutionType.success,  "Imbuing succeeded despite insufficient media")
+        player.inventory.clear()
+
+        // Attempt with media, expected to succeed
+        // We have to avoid inserting into slot 0 because it will be overwritten by adding to the mainhand
+        player.inventory.insertStack(33, HexItems.CHARGED_AMETHYST.defaultStack.copyWithCount(9))
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_ARROW, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -34,7 +50,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingAxe(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_AXE, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_AXE, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -42,7 +58,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingHoe(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_HOE, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_HOE, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -50,7 +66,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingPickaxe(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_PICKAXE, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_PICKAXE, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -58,7 +74,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingShovel(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_SHOVEL, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_SHOVEL, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -66,7 +82,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingSword(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_SWORD, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_SWORD, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -75,7 +91,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingHelmet(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_HELMET, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_HELMET, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -83,7 +99,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingChestplate(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_CHESTPLATE, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_CHESTPLATE, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -91,7 +107,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingLeggings(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_LEGGINGS, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_LEGGINGS, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -99,7 +115,7 @@ class HexchantingGameTest : FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     fun testImbuingBoots(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
-        imbueItemUsingStaff(HexchantingItems.HEX_BOOTS, player, context)
+        imbueItemUsingStaffSuccessfully(HexchantingItems.HEX_BOOTS, player, context)
         context.complete()
         player.onDisconnect()
     }
@@ -141,25 +157,35 @@ class HexchantingGameTest : FabricGameTest {
         return false
     }
 
+
     /**
-     * Simulate imbuing a hex into a Hexchanting item using staff casting
-     *
-     * This function includes a number of assertions to validate the result.
+     * Spawn the given item in the player's offhand and imbue it with the given hex. Returns the casting result.
      */
-    private fun imbueItemUsingStaff(item: Item, player: ServerPlayerEntity, context: TestContext): ItemStack? {
+    private fun imbueItemUsingStaff(item: Item, player: ServerPlayerEntity, hex: List<Iota>): ExecutionClientView {
         // Equip staff and item to imbue
         player.equipStack(EquipmentSlot.MAINHAND, HexItems.STAFF_OAK.defaultStack)
         player.equipStack(EquipmentSlot.OFFHAND, item.defaultStack)
 
         // Cast imbuing hex with staff
         val vm = IXplatAbstractions.INSTANCE.getStaffcastVM(player, Hand.OFF_HAND)
-        val hexToImbue: List<Iota> = actionsAsPatternIota(HexActions.GET_CASTER.prototype)
-        val iotas = makeImbueIotaList(hexToImbue)
+
+        val iotas = makeImbueIotaList(hex)
         val castingResult = vm.queueExecuteAndWrapIotas(iotas, player.serverWorld)
-        logger.debug("Offhand item is {} with nbt {} and count {}", player.offHandStack.item, player.offHandStack.nbt, player.offHandStack.count)
+        return castingResult
+    }
+
+    /**
+     * Simulate imbuing a hex into a Hexchanting item using staff casting and assert that it succeeds.
+     *
+     * Returns the imbued item stack.
+     */
+    private fun imbueItemUsingStaffSuccessfully(item: Item, player: ServerPlayerEntity, context: TestContext): ItemStack? {
+        val hexToImbue: List<Iota> = getCasterHex
+        val castingResult = imbueItemUsingStaff(item, player, hexToImbue)
         context.assertTrue(castingResult.resolutionType.success, "Imbuing a hex into the item failed")
 
         // Retrieve and verify imbued item
+        logger.debug("Offhand item is {} with nbt {} and count {}", player.offHandStack.item, player.offHandStack.nbt, player.offHandStack.count)
         val imbuedItem = player.offHandStack
         context.assertTrue(imbuedItem.item == item, "Offhand item does not match expected item type")
         val hexHolderItem = imbuedItem.item as? HexImbuedItem ?: throw GameTestException("Imbued item can't be cast to HexImbuedItem")
@@ -167,5 +193,22 @@ class HexchantingGameTest : FabricGameTest {
         logger.debug("Imbued hex is {}, expected hex is {}", imbuedHex.first().serialize(), hexToImbue.first().serialize())
         context.assertTrue(iotaListsAreEqual(imbuedHex, hexToImbue ), "Imbued hex differs from expected hex")
         return imbuedItem
+    }
+
+    /**
+     * Change a player's game mode, asserting that the final game mode matches the input
+     *
+     * This is modified from the [TestContext.createMockCreativeServerPlayerInWorld] method. I am unsure as to why there
+     * is no such method already. Maybe this will break something, but we will hope not...
+     */
+    fun createMockSurvivalServerPlayerInWorld(context: TestContext): ServerPlayerEntity {
+        val player = ServerPlayerEntity(
+            context.world.server, context.world, GameProfile(UUID.randomUUID(), "test-mock-survival-player")
+        )
+        context.world.server.playerManager
+            .onPlayerConnect(ClientConnection(NetworkSide.SERVERBOUND), player)
+        player.changeGameMode(GameMode.SURVIVAL)
+        context.assertTrue(player.interactionManager.gameMode == GameMode.SURVIVAL, "GameMode is expected to be survival, but is not")
+        return player
     }
 }
