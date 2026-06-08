@@ -28,7 +28,7 @@ class HexchantingGameTest : FabricGameTest {
     }
 
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    fun imbueChestplate(context: TestContext) {
+    fun testImbuingChestplate(context: TestContext) {
         val player = context.createMockCreativeServerPlayerInWorld()
 
         // Equip staff and item to imbue
@@ -55,6 +55,12 @@ class HexchantingGameTest : FabricGameTest {
         context.complete()
     }
 
+    /**
+     * Creates a hex that casts imbues an item with the input hex.
+     *
+     * This wraps the input in introspection/retrospection and then casts
+     * Imbue Equipment.
+     */
     private fun makeImbueIotaList(iotaToImbue: List<Iota>): List<Iota> {
         val iotas = mutableListOf<Iota>(PatternIota(SpecialPatterns.INTROSPECTION))
         iotas.addAll(iotaToImbue)
@@ -63,6 +69,9 @@ class HexchantingGameTest : FabricGameTest {
         return iotas.toList()
     }
 
+    /**
+     * A simple helper to convert a list of HexActions into a list of equivalent pattern iota
+     */
     private fun actionsAsPatternIota(vararg actions: HexPattern): List<PatternIota> {
         return actions.map { p -> PatternIota(p) }
     }
@@ -73,7 +82,7 @@ class HexchantingGameTest : FabricGameTest {
      *
      * [Iota] don't have an `Iota.equals` function defined. This means they compare using referential equality, which has
      * lead to false negatives. However, Hex Casting has an equals pattern. This is implemented using [Iota.tolerates]
-     * and uses structural equality. This isn't exact equality - doubles use a tolerance - but it is sufficent for our
+     * and uses structural equality. This isn't exact equality - doubles use a tolerance - but it is sufficient for our
      * purposes.
      */
     private fun iotaListsAreEqual(a: List<Iota>, b: List<Iota>): Boolean {
