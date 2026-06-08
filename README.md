@@ -13,17 +13,6 @@ Casting. [Hex Book is here](https://arconyx.github.io/hexchanting/v/latest/main/
 - Fire amethyst arrows, with an embedded hex and a small media supply. Casts on hitting an entity or a block, pushing
   itself and the unfortunate target (or null) to the stack. ~~Are these discount projectile wisps? Yes.~~
 
-## Futures
-
-- Shields, if I can be bothered dealing with the all the hardcoded logic involved in the vanilla shield implementation.
-- No Forge port, unless I start playing on Forge.
-- Return identifiers when breaking blocks (wait on scrying being broken out of hexical)
-- Apply arrow mishaps to the target? Maybe.
-- Prohibit mending?
-- Cast on mine for jeweller's hammer?
-- Disable or reduce particles
-- ???
-
 ## Config
 
 ### Data pack
@@ -48,3 +37,33 @@ hex is triggered. This is the default and historical behaviour. Adjust to taste.
   were valuable reference points when I was getting started.
 - Also to everyone involved in making [HexDoc](https://github.com/hexdoc-dev/hexdoc) because they made documentation easy.
 - And to everyone who has offered feedback in the Hex Casting Discord.
+
+## Development
+A Nix flake is provided in this repository. This defines a stable development environment but isn't doing anything
+special. Any standard Java/Kotlin setup should work.
+
+### Reproducibility
+The [org.gradlex.reproducible-builds](https://gradlex.org/reproducible-builds/) plugin is used to set defaults for 
+Gradle's builtin tasks that aid reproducibility. Non-reproducible builds are considered low priority bugs. However,
+there is no regular or automated reproducibility testing.
+
+### Releases
+Release are built from tagged commits on the main branch. These tags are immutable to the extent permitted by GitHub
+rulesets. Release builds are signed using GitHub's [attestation tooling](https://docs.github.com/en/actions/concepts/security/artifact-attestations).
+
+Beta builds are not currently handled by the release workflow and so are unsigned.
+
+### Versioning
+Since v1.1.1 Hexchanting versioning is approximately semantic - changes that break existing hexes or worlds should trigger
+a major version bump. Minor and patch releases are made as seems appropriate.
+
+## Futures
+
+- Shields, if I can be bothered dealing with the all the hardcoded logic involved in the vanilla shield implementation.
+- ~~No Forge port, unless I start playing on Forge.~~ Planned!
+- Return identifiers when breaking blocks (wait on scrying being broken out of hexical)
+- Apply arrow mishaps to the target? Maybe.
+- Prohibit mending?
+- Cast on mine for jeweller's hammer?
+- Disable or reduce particles
+- ???
