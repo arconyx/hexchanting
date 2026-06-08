@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "hexchanting-test",
+  "version": "${version}",
+  "name": "Gametests for Hexchanting",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [{
+     "value": "gay.thehivemind.hexchanting.HexchantingGameTest",
+      "adapter": "kotlin"
+    }]
+  }
+}

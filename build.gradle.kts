@@ -79,13 +79,23 @@ dependencies {
 // lock dependencies
 dependencyLocking {
     lockAllConfigurations()
-    lockMode = LockMode.STRICT
+    lockMode = LockMode.LENIENT
 }
 
 // lock plugins
 buildscript {
     configurations.classpath {
         resolutionStrategy.activateDependencyLocking()
+    }
+}
+
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "${project.name}-test"
+        enableGameTests = true
+        enableClientGameTests = true
+        eula = true // Agree to the Minecraft EULA.
     }
 }
 

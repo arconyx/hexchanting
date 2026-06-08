@@ -11,19 +11,14 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 
 object HexchantingPatterns {
-    @JvmStatic
-    fun init() {
-        register("imbue_equipment", "dqaqdqaqdqaeadawadadawadadawa", HexDir.WEST, OpImbueEquipment())
+    val HEX_IMBUE_EQUIPMENT = register("imbue_equipment", "dqaqdqaqdqaeadawadadawadadawa", HexDir.WEST, OpImbueEquipment())
 
-    }
-
-    private fun register(name: String, signature: String, startDir: HexDir, action: Action) {
-        Registry.register(
+    private fun register(name: String, signature: String, startDir: HexDir, action: Action): ActionRegistryEntry {
+        val pattern = HexPattern.fromAngles(signature, startDir)
+        return Registry.register(
             HexActions.REGISTRY,
             Identifier.of(MOD_ID, name),
-            ActionRegistryEntry(HexPattern.fromAngles(signature, startDir), action)
+            ActionRegistryEntry(pattern, action)
         )
     }
-
-
 }
