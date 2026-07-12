@@ -19,61 +19,54 @@ import net.minecraft.util.Identifier
 object HexchantingItems {
     val HEX_ARROW = registerWithGroup("amethyst_arrow", HexArrowItem(Item.Settings()), ItemGroups.COMBAT)
 
-    init {
-        registerWithGroup(
-            "amethyst_axe", HexAxe(HexToolMaterials.AMETHYST, 5F, -3f, Item.Settings()), ItemGroups.TOOLS
-        )
-        registerWithGroup(
-            "amethyst_hoe", HexHoe(HexToolMaterials.AMETHYST, -3, 0f, Item.Settings()), ItemGroups.TOOLS
-        )
-        registerWithGroup(
-            "amethyst_pickaxe", HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings()), ItemGroups.TOOLS
-        )
-        registerWithGroup(
-            "amethyst_shovel", HexShovel(HexToolMaterials.AMETHYST, 1.5F, -3f, Item.Settings()), ItemGroups.TOOLS
-        )
+    val HEX_AXE = registerWithGroup(
+        "amethyst_axe", HexAxe(HexToolMaterials.AMETHYST, 5F, -3f, Item.Settings()), ItemGroups.TOOLS
+    )
+    val HEX_HOE = registerWithGroup(
+        "amethyst_hoe", HexHoe(HexToolMaterials.AMETHYST, -3, 0f, Item.Settings()), ItemGroups.TOOLS
+    )
+    val HEX_PICKAXE = registerWithGroup(
+    "amethyst_pickaxe", HexPickaxe(HexToolMaterials.AMETHYST, 1, -2.8f, Item.Settings()), ItemGroups.TOOLS
+    )
+    val HEX_SHOVEL = registerWithGroup(
+    "amethyst_shovel", HexShovel(HexToolMaterials.AMETHYST, 1.5F, -3f, Item.Settings()), ItemGroups.TOOLS
+    )
+    val HEX_SWORD = registerWithGroup(
+    "amethyst_sword", HexSword(HexToolMaterials.AMETHYST, 3, -2.4F, Item.Settings()), ItemGroups.COMBAT
+    )
 
-        registerWithGroup(
-            "amethyst_sword", HexSword(HexToolMaterials.AMETHYST, 3, -2.4F, Item.Settings()), ItemGroups.COMBAT
-        )
+    val HEX_CHESTPLATE = registerWithGroup(
+    "amethyst_chestplate",
+    HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.CHESTPLATE, Item.Settings()),
+    ItemGroups.COMBAT
+    )
+    val HEX_HELMET = registerWithGroup(
+    "amethyst_helmet",
+    HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.HELMET, Item.Settings()),
+    ItemGroups.COMBAT
+    )
+    val HEX_LEGGINGS = registerWithGroup(
+    "amethyst_leggings",
+    HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.LEGGINGS, Item.Settings()),
+    ItemGroups.COMBAT
+    )
+    val HEX_BOOTS = registerWithGroup(
+    "amethyst_boots",
+    HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.BOOTS, Item.Settings()),
+    ItemGroups.COMBAT
+    )
 
-        registerWithGroup(
-            "amethyst_chestplate",
-            HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.CHESTPLATE, Item.Settings()),
-            ItemGroups.COMBAT
-        )
-        registerWithGroup(
-            "amethyst_helmet",
-            HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.HELMET, Item.Settings()),
-            ItemGroups.COMBAT
-        )
-        registerWithGroup(
-            "amethyst_leggings",
-            HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.LEGGINGS, Item.Settings()),
-            ItemGroups.COMBAT
-        )
-        registerWithGroup(
-            "amethyst_boots",
-            HexArmorItem(AmethystArmourMaterial, ArmorItem.Type.BOOTS, Item.Settings()),
-            ItemGroups.COMBAT
-        )
+//    val HEX_SHIELD = registerWithGroup(
+//    "amethyst_shield", HexShield(Item.Settings()), ItemGroups.COMBAT
+//    )
 
-//        registerWithGroup(
-//            "amethyst_shield", HexShield(Item.Settings()), ItemGroups.COMBAT
-//        )
-    }
-
-    private fun register(name: String, item: Item): Item {
+    private fun registerWithGroup(name: String, item: Item, group: RegistryKey<ItemGroup>): Item {
         // Create the item key.
         val itemKey: RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(MOD_ID, name))
         // Register the item.
         Registry.register(Registries.ITEM, itemKey, item)
-        return item
-    }
-
-    private fun registerWithGroup(name: String, item: Item, group: RegistryKey<ItemGroup>): Item {
-        val ri = register(name, item)
-        ItemGroupEvents.modifyEntriesEvent(group).register { it.add { ri } }
+        // Register a function to the event that adds the item
+        ItemGroupEvents.modifyEntriesEvent(group).register { it.add { item } }
         return item
     }
 }
