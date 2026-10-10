@@ -1,11 +1,14 @@
 package gay.thehivemind.hexchanting
 
+import at.petrak.hexcasting.api.casting.ActionRegistryEntry
 import at.petrak.hexcasting.api.casting.eval.ExecutionClientView
 import at.petrak.hexcasting.api.casting.eval.SpecialPatterns
+import at.petrak.hexcasting.api.casting.iota.DoubleIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.PatternIota
 import at.petrak.hexcasting.api.casting.math.HexPattern
 import at.petrak.hexcasting.api.misc.MediaConstants
+import at.petrak.hexcasting.common.casting.PatternRegistryManifest
 import at.petrak.hexcasting.common.lib.HexBlocks
 import at.petrak.hexcasting.common.lib.HexItems
 import at.petrak.hexcasting.common.lib.hex.HexActions
@@ -21,19 +24,24 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.network.ClientConnection
 import net.minecraft.network.NetworkSide
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.test.GameTest
 import net.minecraft.test.GameTestException
 import net.minecraft.test.PositionedException
 import net.minecraft.test.TestContext
+import net.minecraft.text.Text
 import net.minecraft.util.Hand
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.world.GameMode
 import java.util.*
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 class HexchantingGameTest : FabricGameTest {
     val logger = Hexchanting.LOGGER
@@ -307,6 +315,75 @@ class HexchantingGameTest : FabricGameTest {
         player.onDisconnect()
     }
 
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    fun testChestplateMediaUsageWithinLimit(context: TestContext) {
+        chestplateAbsorptionMediaUsage(context, 0.5, 3.0)
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    fun testChestplateMediaUsageOverLimit(context: TestContext) {
+        chestplateAbsorptionMediaUsage(context, 0.5, 5.0)
+    }
+
+    fun chestplateAbsorptionMediaUsage(context: TestContext, duration: Double, potency: Double) {
+        // Setup parameters
+        val item = HexchantingItems.HEX_CHESTPLATE
+        val baseCost = MediaConstants.DUST_UNIT
+        val imbuedItem = imbueItem(
+            item as HexImbuedItem, listOf(
+                PatternIota(HexActions.GET_CASTER.prototype),
+                // Cost baseCost * duration * potency^3
+                // Chestplate has 400 durability which is 40 dust
+                PatternIota(SpecialPatterns.CONSIDERATION),
+                DoubleIota(duration),
+                PatternIota(SpecialPatterns.CONSIDERATION),
+                DoubleIota(potency),
+                PatternIota(lookupPerWorld(HexActions.`POTION$ABSORPTION`, context.world))
+            )
+        )
+
+        // Setup player
+        val player = createMockSurvivalServerPlayerInWorld(context)
+        // The player gets 60 ticks of invulnerability on joining, which we need to clear so they can take damage
+        for (i in 0..60) {
+            player.tick()
+        }
+        player.equipStack(EquipmentSlot.CHEST, imbuedItem)
+        val armourIndex = 2
+        val initialArmourItem = player.inventory.armor[armourIndex]
+        context.assertTrue(
+            initialArmourItem.item == item && initialArmourItem.damage == 0,
+            "Chestplate is missing or damaged before casting. Armour list is ${player.inventory.armor}, we checked index $armourIndex."
+        )
+        unlockEnlightenment(context, player)
+
+        // Trigger hex
+        player.damage(player.damageSources.fall(), 1.0F)
+
+        // Check expected outcome
+        val finalArmourItem = player.inventory.armor[armourIndex]
+        val expectedMedia = (baseCost * duration * potency * potency * potency).toLong()
+        val expectedDamage = HexHolderEquipment.mediaToDamage(expectedMedia)
+        if (expectedDamage < finalArmourItem.maxDamage) {
+            context.assertTrue(
+                finalArmourItem.item == item,
+                "Final chestplate item was ${finalArmourItem.item}, not the expected item ${item}."
+            )
+            context.assertTrue(
+                finalArmourItem.item == item && finalArmourItem.damage.toLong() == expectedDamage,
+                "Chestplate durability has changed by an unexpected amount (got ${finalArmourItem.damage}, expected ${expectedDamage})"
+            )
+        } else {
+            context.assertTrue(
+                finalArmourItem.item == Items.AIR, "Chestplate has not broken"
+            )
+        }
+
+        // Mark success and clean up
+        context.complete()
+        player.onDisconnect()
+    }
+
     /// UTILITIES ======================================================================================================
 
     /**
@@ -398,10 +475,21 @@ class HexchantingGameTest : FabricGameTest {
      * This is modified from the [TestContext.createMockCreativeServerPlayerInWorld] method. I am unsure as to why there
      * is no such method already. Maybe this will break something, but we will hope not...
      */
-    fun createMockSurvivalServerPlayerInWorld(context: TestContext): ServerPlayerEntity {
-        val player = ServerPlayerEntity(
-            context.world.server, context.world, GameProfile(UUID.randomUUID(), "test-mock-survival-player")
-        )
+    fun createMockSurvivalServerPlayerInWorld(context: TestContext, logMessages: Boolean = false): ServerPlayerEntity {
+        val uuid = UUID.randomUUID()
+        val player = object : ServerPlayerEntity(
+            context.world.server, context.world, GameProfile(uuid, "test-mock-survival-player")
+        ) {
+            private val logMessages: Boolean = logMessages
+
+            override fun sendMessage(message: Text) {
+                if (this.logMessages) {
+                    logger.info("Message sent to mock player {}: {}", uuid, message)
+                } else {
+                    super.sendMessage(message)
+                }
+            }
+        }
         context.world.server.playerManager.onPlayerConnect(ClientConnection(NetworkSide.SERVERBOUND), player)
         player.changeGameMode(GameMode.SURVIVAL)
         context.assertTrue(
@@ -437,5 +525,30 @@ class HexchantingGameTest : FabricGameTest {
         throw PositionedException(
             "Expected ${item.name.string} item", blockPos, pos, context.tick
         )
+    }
+
+    fun unlockEnlightenment(context: TestContext, player: ServerPlayerEntity) {
+        val advancement = context.world.server.advancementLoader.get(Identifier("hexcasting", "enlightenment"))
+        val tracker = player.advancementTracker
+        val progress = tracker.getProgress(advancement)
+        progress.unobtainedCriteria.forEach { criterion -> tracker.grantCriterion(advancement, criterion) }
+        context.assertTrue(progress.isDone, "Player does not have overcast advancement")
+    }
+
+    /**
+     * Lookup the local form of a per-world pattern, such as Great Spells.
+     *
+     * Throws if it cannot find the pattern.
+     */
+    fun lookupPerWorld(pattern: ActionRegistryEntry, world: ServerWorld): HexPattern {
+        val key = HexActions.REGISTRY.getKey(pattern).getOrNull()
+        val worldPattern = PatternRegistryManifest.getCanonicalStrokesPerWorld(key, world.server.overworld)
+        if (worldPattern == null) {
+            // We throw because this is a test method so we don't need to be neat
+            // We expect to only call it with valid patterns so if we aren't we want to know about it
+            throw NullPointerException("Could not find per world pattern")
+        } else {
+            return worldPattern
+        }
     }
 }
