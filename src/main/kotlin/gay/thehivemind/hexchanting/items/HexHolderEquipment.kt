@@ -27,44 +27,46 @@ import kotlin.math.sign
 
 /*
 The current intent is that these items can use their durability in the place of media, but it comes at a steep
-conversion cost. This makes it strictly worse than artifacts and incentivises having a personal media supply.
+conversion cost. This makes it strictly worse than artefacts and incentivises having a personal media supply.
 
 If I make the tools use charged amethysts in their construction I don't need to feel too bad about making them on
 par with diamond. It also fits their unstable nature, consuming themselves for power.
  */
 
 interface HexHolderEquipment : HexImbuedItem {
-    fun getDamageToMediaConversionFactor(): Long {
-        return MediaConstants.DUST_UNIT / 10
-    }
-
     // We want this to be a lower priority than anything else in your inventory
     override fun getConsumptionPriority(stack: ItemStack?): Int {
         return 500
     }
 
-    fun damageToMedia(stack: ItemStack, damage: Int): Long {
-        val remainingDurability = stack.maxDamage - damage
-        return max(remainingDurability * getDamageToMediaConversionFactor(), 0)
-    }
-
-    fun mediaToDamage(stack: ItemStack, media: Long): Int {
-        // Round up so people don't get to sneak free mana
-        val damageEquivalent =
-            media / getDamageToMediaConversionFactor() + media.rem(getDamageToMediaConversionFactor()).sign.absoluteValue
-        return max(stack.maxDamage - damageEquivalent.toInt(), 0)
-    }
-
+    /**
+     * Get the current media this item holds
+     */
     override fun getMedia(stack: ItemStack): Long {
-        return damageToMedia(stack, stack.damage)
+        val remainingDurability = max(0, stack.maxDamage - stack.damage)
+        return damageToMedia(remainingDurability)
     }
 
+    /**
+     * Get the maximum media this item can hold
+     */
     override fun getMaxMedia(stack: ItemStack): Long {
-        return stack.maxDamage * getDamageToMediaConversionFactor()
+        return damageToMedia(stack.maxDamage)
     }
 
     override fun setMedia(stack: ItemStack, media: Long) {
-        stack.damage = mediaToDamage(stack, media)
+        // This bypasses item-breaking handling, which isn't great
+        // We do this for two reasons.
+        // - Ignoring unbreaking enchantments
+        // - This may be called to repair the item instead of damaging it
+
+        // TODO: mediaToDamage rounds up. Is this desirable?
+        val durability = mediaToDamage(media)
+        val damage = stack.maxDamage - durability
+
+        // Clamp >= 0 so the item can't go past max durability
+        // Clamp <= maxDamage so the item can't go into negative durability
+        stack.damage = damage.toInt().coerceIn(0, stack.maxDamage)
     }
 
     // We only want these items to be able to power themselves
@@ -105,6 +107,34 @@ interface HexHolderEquipment : HexImbuedItem {
         if (clientView.resolutionType.success) {
             ParticleSpray(player.pos, Vec3d(0.0, 1.5, 0.0), 0.4, Math.PI / 3, 30)
                 .sprayParticles(world, context.getPigment())
+        }
+    }
+
+    companion object {
+        const val MEDIA_PER_DAMAGE = MediaConstants.DUST_UNIT / 10
+
+        /**
+         * Convert damage into equivalent media.
+         */
+        fun damageToMedia(damage: Int): Long {
+            return MEDIA_PER_DAMAGE * damage
+        }
+
+        /**
+         * Convert media into equivalent damage, rounding up
+         */
+        fun mediaToDamage(media: Long): Long {
+            val base = media.floorDiv(MEDIA_PER_DAMAGE)
+            // Kotlin doesn't have ceiling division so we do it ourselves.
+            // The sign of the remainder matches the sign of `media`
+            // `rem.sign` is 0 if the value is zero, else -1 or 1.
+            // If there's no remainder rounder is zero
+            // If media is positive and there is a remainder the rounder is 1
+            // If media is negative and there's a reminder the sign is -1 so the abs value makes it 1.
+            // But also why is media negative, dear caller?
+            val rounder = media.rem(MEDIA_PER_DAMAGE).sign.absoluteValue
+            // We don't case to int because that obscures how to handle overflows to the caller
+            return base + rounder
         }
     }
 }

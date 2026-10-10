@@ -1,6 +1,7 @@
 # Unreleased
 ### Breaking Changes
 - Bump minimum Hex Casting version to 0.11.3
+- Fix items ending up on negative durability when trying to draw excessive amounts of media.
 
 ### Other Changes
 - Version constraints on runtime dependencies in `fabric.mod.json` have been
