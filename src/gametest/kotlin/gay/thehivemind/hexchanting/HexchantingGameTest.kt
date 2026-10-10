@@ -181,6 +181,10 @@ class HexchantingGameTest : FabricGameTest {
             finalArmourItem.damage.toLong() == expectedDamage,
             "Helmet durability has changed by an unexpected amount (got ${finalArmourItem.damage}, expected ${expectedDamage})"
         )
+        context.assertTrue(
+            finalArmourItem.damage.toLong() < finalArmourItem.maxDamage,
+            "Helmet should be broken (got ${finalArmourItem.damage} durability, expected ${expectedDamage})"
+        )
 
         // Mark success and clean up
         context.complete()
@@ -233,6 +237,10 @@ class HexchantingGameTest : FabricGameTest {
         context.assertTrue(
             finalArmourItem.damage.toLong() == expectedDamage,
             "Chestplate durability has changed by an unexpected amount (got ${finalArmourItem.damage}, expected ${expectedDamage})"
+        )
+        context.assertTrue(
+            finalArmourItem.damage.toLong() < finalArmourItem.maxDamage,
+            "Chestplate should be broken (got ${finalArmourItem.damage} durability, expected ${expectedDamage})"
         )
 
         // Mark success and clean up
@@ -288,6 +296,10 @@ class HexchantingGameTest : FabricGameTest {
         context.assertTrue(
             finalArmourItem.damage.toLong() == expectedDamage,
             "Leggings durability has changed by an unexpected amount (got ${finalArmourItem.damage}, expected ${expectedDamage})"
+        )
+        context.assertTrue(
+            finalArmourItem.damage.toLong() < finalArmourItem.maxDamage,
+            "Leggings should be broken (got ${finalArmourItem.damage} durability, expected ${expectedDamage})"
         )
 
         // Mark success and clean up
