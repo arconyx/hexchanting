@@ -76,19 +76,6 @@ dependencies {
     modLocalRuntime(files("${rootProject.rootDir}/libs/serialization-hooks-0.4.99999.jar"))
 }
 
-// lock dependencies
-dependencyLocking {
-    lockAllConfigurations()
-    lockMode = LockMode.STRICT
-}
-
-// lock plugins
-buildscript {
-    configurations.classpath {
-        resolutionStrategy.activateDependencyLocking()
-    }
-}
-
 tasks.processResources {
     inputs.property("version", project.version)
     filesMatching("fabric.mod.json") {
