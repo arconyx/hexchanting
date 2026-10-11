@@ -1,5 +1,7 @@
 # Unreleased
-### Breaking Changes
+
+# 1.3.0-beta1
+### Notable Changes
 - Bump minimum Hex Casting version to 0.11.3
 - Fix items ending up on negative durability when trying to draw excessive amounts of media. Items will now break when
   trying to use more media than they hold.
