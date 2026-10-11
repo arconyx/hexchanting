@@ -27,18 +27,18 @@ interface HexImbuedItem : HexHolderItem {
         return stack?.hasList(TAG_PROGRAM, NbtElement.COMPOUND_TYPE) ?: false
     }
 
-    override fun getHex(stack: ItemStack?, level: ServerWorld?): MutableList<Iota>? {
+    override fun getHex(stack: ItemStack?, level: ServerWorld?): List<Iota>? {
         val patsTag = stack?.getList(TAG_PROGRAM, NbtElement.COMPOUND_TYPE.toInt()) ?: return null
 
-        val out = ArrayList<Iota>()
+        val out = mutableListOf<Iota>()
         for (patTag in patsTag) {
             val tag = patTag.asCompound
             out.add(IotaType.deserialize(tag, level))
         }
-        return out
+        return out.toList()
     }
 
-    override fun writeHex(stack: ItemStack?, program: MutableList<Iota>?, pigment: FrozenPigment?, media: Long) {
+    override fun writeHex(stack: ItemStack?, program: List<Iota>?, pigment: FrozenPigment?, media: Long) {
         if (stack == null || program == null) {
             return
         }
@@ -69,7 +69,7 @@ interface HexImbuedItem : HexHolderItem {
         context: TooltipContext?
     ) {
         val patterns = stack?.getList(TAG_PROGRAM, NbtElement.COMPOUND_TYPE.toInt())
-        if (patterns != null && patterns.size > 0) {
+        if (!patterns.isNullOrEmpty()) {
             // Self-indulgent variable colouring
             val time = world?.time?.div(5)?.rem(814621)?.toFloat() ?: 10F // magic number
             val pigment = getPigment(stack)?.colorProvider?.getColor(time, stack.holder?.pos ?: Vec3d(0.3, 0.4, 0.5))
