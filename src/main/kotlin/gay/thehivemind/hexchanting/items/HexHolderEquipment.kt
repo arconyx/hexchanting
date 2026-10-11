@@ -6,9 +6,11 @@ import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.misc.MediaConstants
 import gay.thehivemind.hexchanting.casting.PackagedToolCastEnv
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.stat.Stats
 import net.minecraft.util.Hand
 import net.minecraft.util.math.Vec3d
 import kotlin.math.absoluteValue
@@ -67,6 +69,10 @@ interface HexHolderEquipment : HexImbuedItem {
         // Clamp >= 0 so the item can't go past max durability
         // Clamp <= maxDamage so the item can't go into negative durability
         stack.damage = damage.toInt().coerceIn(0, stack.maxDamage)
+
+        if (stack.damage >= stack.maxDamage) {
+            stack.decrement(1)
+        }
     }
 
     // We only want these items to be able to power themselves
@@ -87,10 +93,7 @@ interface HexHolderEquipment : HexImbuedItem {
     }
 
     fun scaffoldCasting(
-        itemStack: ItemStack,
-        world: ServerWorld,
-        player: ServerPlayerEntity,
-        stack: List<Iota>
+        itemStack: ItemStack, world: ServerWorld, player: ServerPlayerEntity, stack: List<Iota>
     ) {
         val instructions = getHex(itemStack, world) ?: return
         // You can't mine or attack with the tool in your offhand so this should be safe
@@ -105,8 +108,39 @@ interface HexHolderEquipment : HexImbuedItem {
 
         // We'll probably want to do something more subtle in future but this will work for now
         if (clientView.resolutionType.success) {
-            ParticleSpray(player.pos, Vec3d(0.0, 1.5, 0.0), 0.4, Math.PI / 3, 30)
-                .sprayParticles(world, context.getPigment())
+            ParticleSpray(player.pos, Vec3d(0.0, 1.5, 0.0), 0.4, Math.PI / 3, 30).sprayParticles(
+                world,
+                context.getPigment()
+            )
+        }
+
+        // Notify client about item breaking
+        if (itemStack.damage >= itemStack.maxDamage) {
+            player.incrementStat(Stats.BROKEN.getOrCreateStat(itemStack.item))
+            // Send message to client
+            // Its simple but it works
+            when (itemStack) {
+                player.getEquippedStack(EquipmentSlot.HEAD) ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.HEAD)
+
+                player.getEquippedStack(EquipmentSlot.CHEST) ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.CHEST)
+
+                player.getEquippedStack(EquipmentSlot.LEGS) ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.LEGS)
+
+                player.getEquippedStack(EquipmentSlot.FEET) ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.FEET)
+
+                player.getEquippedStack(EquipmentSlot.MAINHAND) ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND)
+
+                player.getEquippedStack(EquipmentSlot.OFFHAND) ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.OFFHAND)
+
+                else ->
+                    return player.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND)
+            }
         }
     }
 
