@@ -57,7 +57,7 @@ jobs:
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
       - name: Capture build artifacts
-        uses: actions/upload-artifact@7
+        uses: actions/upload-artifact@v7
         with:
           path: build/libs/
           if-no-files-found: error
